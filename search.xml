@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>MySQL学习记录</title>
+      <link href="/post/77d962bf.html"/>
+      <url>/post/77d962bf.html</url>
+      
+        <content type="html"><![CDATA[<p><strong>本文用来记录DBMS小白学习MySQL的过程</strong>。</p><p>学习资源链接：https://www.bilibili.com/video/BV1iq4y1u7vj?p=12&amp;vd_source=44ba9a7b92cb9c058705d88870afca92</p><h2 id="学习主线">学习主线：</h2><figure><img src="/post/77d962bf/image-20230928115341489.png" alt="image-20230928115341489"><figcaption aria-hidden="true">image-20230928115341489</figcaption></figure><h1 id="第03章_基本的select语句select非常重要">第03章_基本的SELECT语句（SELECT非常重要）</h1><h2 id="sql的分类">SQL的分类</h2><p>DDL:数据定义语言。CREATE  TRUNCATE DML:数据操作语言。INSERTDCL:数据控制语言。COMMIT </p><p>查询和更新指令构成了 SQL 的 DML部分（<strong>增删改查</strong>）：</p><ul><li><code>INSERT INTO</code> - 向数据库表中插入数据</li><li><code>DELETE</code> - 从数据库表中删除数据</li><li><code>UPDATE</code> - 更新数据库表中的数据</li><li><code>SELECT</code> - 从数据库表中获取数据</li></ul><p>SQL 的数据定义语言 (DDL)部分使我们有能力创建或删除表格。我们也可以定义索引（键），规定表之间的链接，以及施加表间的约束。</p><p>SQL 中最重要的 DDL 语句:</p><ul><li><code>CREATE DATABASE</code> - 创建新数据库</li><li><code>ALTER DATABASE</code> - 修改数据库</li><li><code>CREATE TABLE</code> - 创建新表</li><li><code>ALTER TABLE</code> - 变更（改变）数据库表</li><li><code>DROP TABLE</code> - 删除表</li><li><code>CREATE INDEX</code> - 创建索引（搜索键）</li><li><code>DROP INDEX</code> - 删除索引</li></ul>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Kaggle比赛入门计划</title>
       <link href="/post/2c68a937.html"/>
       <url>/post/2c68a937.html</url>
