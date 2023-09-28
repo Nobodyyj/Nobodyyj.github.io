@@ -1,5 +1,6 @@
 ---
 title: Kaggle比赛入门计划
+abbrlink: 2c68a937
 date: 2023-09-22 11:08:36
 tags:
 ---
