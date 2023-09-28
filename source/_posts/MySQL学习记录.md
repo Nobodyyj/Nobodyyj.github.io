@@ -1,5 +1,6 @@
 ---
 title: MySQL学习记录
+abbrlink: 77d962bf
 date: 2023-09-28 11:44:11
 tags:
 ---
@@ -10,7 +11,7 @@ tags:
 
 ## 学习主线：
 
-![image-20230928115341489](./MySQL学习记录.assets/image-20230928115341489.png)
+![image-20230928115341489](./MySQL学习记录/image-20230928115341489.png)
 
 # 第03章_基本的SELECT语句（SELECT非常重要）
 
