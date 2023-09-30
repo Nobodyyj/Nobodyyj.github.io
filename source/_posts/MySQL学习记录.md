@@ -51,3 +51,11 @@ use aiguigudb #运行sql文件，show tables;即可看到各表
 ```
 
 ### 使用Navicat时
+
+![image-20230930152422470](./MySQL学习记录/image-20230930152422470.png)
+
+右键图中atguiggudb，运行SQL文件
+
+![image-20230930152602013](./MySQL学习记录/image-20230930152602013.png)
+
+然后刷新，表就会更新。
