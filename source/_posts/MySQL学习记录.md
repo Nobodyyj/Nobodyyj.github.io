@@ -40,3 +40,14 @@ SQL 中最重要的 DDL 语句:
 - `CREATE INDEX` - 创建索引（搜索键） 
 - `DROP INDEX` - 删除索引 
 
+## SQL的数据导入方法
+
+### 如果是使用cmd命令行
+
+```cmd
+mysql -u root -p # 进入mysql数据库
+source #文件
+use aiguigudb #运行sql文件，show tables;即可看到各表
+```
+
+### 使用Navicat时
