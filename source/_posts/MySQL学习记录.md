@@ -46,7 +46,7 @@ SQL 中最重要的 DDL 语句:
 
 ```cmd
 mysql -u root -p # 进入mysql数据库
-source #文件
+source # + 文件的全部路径名，比如"source d:\atguigudb.sql;" 
 use aiguigudb #运行sql文件，show tables;即可看到各表
 ```
 

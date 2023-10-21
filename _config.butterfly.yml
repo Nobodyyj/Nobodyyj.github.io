@@ -231,7 +231,7 @@ aside:
       enable: true
       icon: fab fa-github
       text: Follow Me
-      link: https://github.com/xxxxxx
+      link: https://github.com/Nobodyyj
   card_announcement:
     enable: true
     content: This is my Blog
@@ -259,7 +259,7 @@ aside:
     order: -1 # Sort of order. 1, asc for ascending; -1, desc for descending
     limit: 8 # if set 0 will show all
     sort_order: # Don't modify the setting unless you know how it works
-  card_webinfo:
+  card_webinfo:s
     enable: true
     post_count: true
     last_push_date: true
