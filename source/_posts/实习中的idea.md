@@ -1,5 +1,6 @@
 ---
 title: 实习中的idea
+abbrlink: '698179e8'
 date: 2023-10-11 10:29:03
 tags:
 ---
