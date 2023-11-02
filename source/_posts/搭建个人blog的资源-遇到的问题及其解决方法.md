@@ -38,9 +38,11 @@ fatal: unable to access 'XXX': Recv failure: Connection was reset
 
 1. 依次将如下两条语句复制到git中后，点击回车
 
-   ```
+   ```python
    git config --global --unset http.proxy 
    git config --global --unset https.proxy
+   git config --global http.proxy http://手动设置代理荔枝:端口
+   
    ```
 
    
