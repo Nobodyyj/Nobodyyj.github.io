@@ -209,7 +209,7 @@ footer:
     enable: true
     since: 2023
   custom_text:
-  copyright: true # Copyright of theme and framework
+  copyright: true # Copyright of theme and frameworkf
 
 # aside (側邊欄)
 # --------------------------------------
@@ -231,7 +231,7 @@ aside:
       enable: true
       icon: fab fa-github
       text: Follow Me
-      link: https://github.com/xxxxxx
+      link: https://github.com/Nobodyyj
   card_announcement:
     enable: true
     content: This is my Blog
@@ -258,7 +258,7 @@ aside:
     format: MMMM YYYY # eg: YYYY年MM月
     order: -1 # Sort of order. 1, asc for ascending; -1, desc for descending
     limit: 8 # if set 0 will show all
-    sort_order: # Don't modify the setting unless you know how it works
+    sort_order: # Don't modify the setting unless you know how it work
   card_webinfo:
     enable: true
     post_count: true
