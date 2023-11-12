@@ -6,7 +6,7 @@
   <link href="https://nobodyyj.github.io/atom.xml" rel="self"/>
   
   <link href="https://nobodyyj.github.io/"/>
-  <updated>2023-10-21T09:05:57.972Z</updated>
+  <updated>2023-11-12T04:52:03.237Z</updated>
   <id>https://nobodyyj.github.io/</id>
   
   <author>
@@ -17,11 +17,37 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>实习思考</title>
+    <link href="https://nobodyyj.github.io/post/e850ef3b.html"/>
+    <id>https://nobodyyj.github.io/post/e850ef3b.html</id>
+    <published>2023-11-12T04:35:38.000Z</published>
+    <updated>2023-11-12T04:52:03.237Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="实习思考">实习思考</h1><h2 id="前言">前言</h2><p>​本文用来记录我在第一段量化实习中的思考，以及由此产生的关于学习方向的灵感。</p><h2 id="对于整体">对于整体</h2><p>​“量化投资始终坚持以基本面为核心，同时结合价量信息的方式，立足从投资的本源看问题，以长期有效的逻辑出发构建基础框架，再与交易逻辑相融合。无论是基本面还是价量，对每一类信息都会深挖背后的逻辑与含义，在此基础上，采用传统数学建模与领先的人工智能和机器学习技术结合的方式，不断随着市场结构与交易行为进行优化迭代。”</p><p>​ 1.是如何将基本面因子与量价因子结合的，使用有效前沿吗？</p><p>​ 2.交易逻辑+基础框架，是指因子组合之后划分为某个风格框架吗？</p><p>​3.因子表现较好的作为多因子框架的因子，表现较差的作为机器学习模型的因子吗？这两者是如何结合的呢，也是划分为某个风格的吗？如何判断市场结构和交易行为，这是涉及到根据微观结构调整权重吗？</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;实习思考&quot;&gt;实习思考&lt;/h1&gt;
+&lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
+&lt;p&gt;​
+本文用来记录我在第一段量化实习中的思考，以及由此产生的关于学习方向的灵感。&lt;/p&gt;
+&lt;h2 id=&quot;对于整体&quot;&gt;对于整体&lt;/h2&gt;
+&lt;p&gt;​
+“量化投资始终坚持以基本面为</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
     <title>实习中的idea</title>
     <link href="https://nobodyyj.github.io/post/698179e8.html"/>
     <id>https://nobodyyj.github.io/post/698179e8.html</id>
     <published>2023-10-11T02:29:03.000Z</published>
-    <updated>2023-10-21T09:05:57.972Z</updated>
+    <updated>2023-10-23T08:05:56.365Z</updated>
     
     <content type="html"><![CDATA[<p>1.如何根据市场交易规则（最小交易单位）来执行计算出的交易信号。</p>]]></content>
     
@@ -42,7 +68,7 @@
     <link href="https://nobodyyj.github.io/post/f268ed81.html"/>
     <id>https://nobodyyj.github.io/post/f268ed81.html</id>
     <published>2023-10-10T03:14:04.000Z</published>
-    <updated>2023-10-21T09:05:57.969Z</updated>
+    <updated>2023-10-23T08:05:56.364Z</updated>
     
     <content type="html"><![CDATA[<h2 id="使用class创建类的几个特殊函数">使用Class()创建类的几个特殊函数</h2><h3 id="new__"><code>__new__</code></h3><h3 id="init__"><code>__init__</code></h3><h3 id="call__">3.<code>__call__</code></h3><p>定义：<code>__call__</code>是创建实例对象的运算符。**元类的__call__方法可以用来控制该元类所创建的类去创建实例对象的过程**</p><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># example 1</span><span class="token keyword">class</span> <span class="token class-name">MyClass</span><span class="token punctuation">:</span>    <span class="token keyword">def</span> <span class="token function">__call__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> num<span class="token punctuation">)</span><span class="token punctuation">:</span>        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f'[</span><span class="token interpolation"><span class="token punctuation">&#123;</span>num<span class="token punctuation">&#125;</span></span><span class="token string">] </span><span class="token interpolation"><span class="token punctuation">&#123;</span>self<span class="token punctuation">&#125;</span></span><span class="token string">'</span></span><span class="token punctuation">)</span>myobj <span class="token operator">=</span> MyClass<span class="token punctuation">(</span><span class="token punctuation">)</span>myobj<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>myobj<span class="token punctuation">.</span>__call__<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><code>MyClass( )</code>就相当于<code>MyClass.__call__( )</code>，就会按照定义把调用者类MyClass打印出来</p><p>但是Myclass在定义的时候没有return值，所以创建的实例为空。</p><hr><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Person</span><span class="token punctuation">:</span>    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> firstname<span class="token punctuation">,</span> lastname<span class="token punctuation">)</span><span class="token punctuation">:</span>        self<span class="token punctuation">.</span>firstname <span class="token operator">=</span> firstname        self<span class="token punctuation">.</span>lastname <span class="token operator">=</span> lastname    <span class="token decorator annotation punctuation">@classmethod</span>    <span class="token keyword">def</span> <span class="token function">from_fullname</span><span class="token punctuation">(</span>cls<span class="token punctuation">,</span> fullname<span class="token punctuation">)</span><span class="token punctuation">:</span>        cls<span class="token punctuation">.</span>firstname<span class="token punctuation">,</span> cls<span class="token punctuation">.</span>lastname <span class="token operator">=</span> fullname<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">' '</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>此处的<code>cls</code>和<code>self</code>的用法规定（<strong>Functionand method arguments</strong>）:</p><p>Always use <code>self</code> for the first argument to instancemethods.</p><p>Always use <code>cls</code> for the first argument to classmethods.</p><hr>]]></content>
     
