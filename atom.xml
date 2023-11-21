@@ -6,7 +6,7 @@
   <link href="https://nobodyyj.github.io/atom.xml" rel="self"/>
   
   <link href="https://nobodyyj.github.io/"/>
-  <updated>2023-11-12T15:06:28.576Z</updated>
+  <updated>2023-11-21T14:40:55.814Z</updated>
   <id>https://nobodyyj.github.io/</id>
   
   <author>
@@ -17,11 +17,34 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>因子优化code及思路</title>
+    <link href="https://nobodyyj.github.io/post/67be61b8.html"/>
+    <id>https://nobodyyj.github.io/post/67be61b8.html</id>
+    <published>2023-11-21T14:37:57.000Z</published>
+    <updated>2023-11-21T14:40:55.814Z</updated>
+    
+    <content type="html"><![CDATA[<p>本文用于记录我在尝试提升基本面因子性能的时候想要进行的操作及其code，有一部分已封装为类，在完成本周week7的工作后会把写好的函数都封装到Factor_analyzer中。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;本文用于记录我在尝试提升基本面因子性能的时候想要进行的操作及其code，有一部分已封装为类，在完成本周week7的工作后会把写好的函数都封装到Factor_analyzer中。&lt;/p&gt;
+</summary>
+      
+    
+    
+    
+    
+    <category term="实习" scheme="https://nobodyyj.github.io/tags/%E5%AE%9E%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
     <title>实习思考</title>
     <link href="https://nobodyyj.github.io/post/e850ef3b.html"/>
     <id>https://nobodyyj.github.io/post/e850ef3b.html</id>
     <published>2023-11-12T04:35:38.000Z</published>
-    <updated>2023-11-12T15:06:28.576Z</updated>
+    <updated>2023-11-21T14:37:34.953Z</updated>
     
     <content type="html"><![CDATA[<h1 id="实习思考">实习思考</h1><h2 id="前言">前言</h2><p>​本文用来记录我在第一段量化实习中的思考，以及由此产生的关于学习方向的灵感。</p><h2 id="对于整体">对于整体</h2><p>​“量化投资始终坚持以基本面为核心，同时结合价量信息的方式，立足从投资的本源看问题，以长期有效的逻辑出发构建基础框架，再与交易逻辑相融合。无论是基本面还是价量，对每一类信息都会深挖背后的逻辑与含义，在此基础上，采用传统数学建模与领先的人工智能和机器学习技术结合的方式，不断随着市场结构与交易行为进行优化迭代。”</p><p>1.是如何将基本面因子与量价因子结合的，使用有效前沿吗？</p><p>2.交易逻辑+基础框架，是指因子组合之后划分为某个风格框架吗？</p><p>3.因子表现较好的作为多因子框架的因子，表现较差的作为机器学习模型的因子吗？这两者是如何结合的呢，也是划分为某个风格的吗？如何判断市场结构和交易行为，这是涉及到根据微观结构调整权重吗？</p><h2 id="挖因子">挖因子</h2><p>1.对于中低频的基本面因子，正确的挖掘模式是什么样的呢，有哪些挖掘方法，效率如何？</p><p>2.对于高频因子，如何判断因子是处于正常波动还是失效的状态</p><p>3.如何在收益率和可解释性（逻辑性）进行取舍</p><h2 id="因子组合">因子组合</h2><p>1.看完石川《因子投资方法与实践》后写</p><h2 id="交易信号">交易信号</h2><p>1.交易信号的分布需要服从norm吗？</p><p>2.根据计算出的alpha值如何分配position？</p><h2 id="回测框架">回测框架</h2><p><font color="blue">Alphalens、Backtrader</font></p><p><strong>争取在2024年前使用backtrader跑一次回测</strong></p><h2 id="绩效归因">绩效归因</h2><p>Brison框架</p>]]></content>
     
@@ -39,6 +62,8 @@
     
     
     
+    
+    <category term="实习" scheme="https://nobodyyj.github.io/tags/%E5%AE%9E%E4%B9%A0/"/>
     
   </entry>
   
