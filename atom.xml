@@ -6,7 +6,7 @@
   <link href="https://nobodyyj.github.io/atom.xml" rel="self"/>
   
   <link href="https://nobodyyj.github.io/"/>
-  <updated>2023-11-24T05:06:09.877Z</updated>
+  <updated>2023-11-24T05:14:54.112Z</updated>
   <id>https://nobodyyj.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>C++学习、刷题之旅</title>
+    <link href="https://nobodyyj.github.io/post/e4f86aa1.html"/>
+    <id>https://nobodyyj.github.io/post/e4f86aa1.html</id>
+    <published>2023-11-22T15:04:55.000Z</published>
+    <updated>2023-11-24T05:14:54.112Z</updated>
+    
+    <content type="html"><![CDATA[<p>今天开完硕士项目的前置课程启动会，“惊喜地”发现抽到了我基础最差的C++方向</p><figure><img src="/post/e4f86aa1/1700665835682.png" alt="1700665835682"><figcaption aria-hidden="true">1700665835682</figcaption></figure><p>因此只好忍痛放着前面挖下的坑（Kaggle、MySQL学习记录），将学习C++的优先级提高，新开一个blog记录我学习C++、刷leetcode的经历。</p><figure><img src="/post/e4f86aa1/image-20231122231520699.png" alt="image-20231122231520699"><figcaption aria-hidden="true">image-20231122231520699</figcaption></figure><figure><img src="/post/e4f86aa1/image-20231122231533719.png" alt="image-20231122231533719"><figcaption aria-hidden="true">image-20231122231533719</figcaption></figure><hr>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;今天开完硕士项目的前置课程启动会，“惊喜地”发现抽到了我基础最差的C++方向&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&quot;/post/e4f86aa1/1700665835682.png&quot; alt=&quot;1700665835682&quot;&gt;
+&lt;figcaption aria-</summary>
+      
+    
+    
+    
+    
+    <category term="C++" scheme="https://nobodyyj.github.io/tags/C/"/>
+    
+    <category term="Leetcode" scheme="https://nobodyyj.github.io/tags/Leetcode/"/>
+    
+  </entry>
   
   <entry>
     <title>因子优化code及思路</title>
