@@ -39,3 +39,6 @@ plot_distribution(Analyzer.industry_analyze_detail('2021-03-29')['factor'].value
 | ```plot_distribution(tmp**3,'power=3')``` | ```plot_distribution(tmp**5,'power=5')``` |
 | ![3次](./实习中的idea/3次.png)     | ![5次](./实习中的idea/5次.png)     |
 
+## 3.回测计算的是单利
+```python
+df['ac_returns'] = df['returns'].cumsum()
