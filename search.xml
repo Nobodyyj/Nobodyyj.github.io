@@ -4,6 +4,38 @@
   
     
     <entry>
+      <title>股票形态相似度研究</title>
+      <link href="/post/32dc4a05.html"/>
+      <url>/post/32dc4a05.html</url>
+      
+        <content type="html"><![CDATA[<p><font color="red">1.东财数据+供应链数据</font></p><p><font color="red">2.对东财数据降噪处理，计算簇内</font></p><p><font color="red">3.在某一个时间节点，我们回看过去已知的概念数据or供应链数据</font></p><p><font color="red">机器学习做出来的效果不好，所以尝试对数据进行降噪处理</font></p><h1 id="section">11.27</h1><h3 id="具体操作">具体操作</h3><p>将概念算出来之后，得到每一天每个概念内股票的关系强度（比如等权的pearson系数），和宽基指数内的关系强度进行对比。可以尝试将concept内关系最弱的股票剔除，看概念内股票的关系有没有明显增强。</p><h3 id="先上手计算欧氏距离">先上手计算欧氏距离</h3><p>欧氏距离为常见的计算时间序列相似度的方法，该方法可以直接衡量两个时间序列之间的距离，其计算公式为:<span class="math display">\[D=\sqrt{\sum_{i=1}^N\left(X_i-Y_i\right)^2}\]</span></p><p>其中 <span class="math inline">\(\mathrm{N}\)</span> 为序列 <span class="math inline">\(\mathrm{X}\)</span> 和序列 <span class="math inline">\(\mathrm{Y}\)</span> 的长度。 由上述公式可以看出,若要计算两个序列之间的欧氏距离, 有两个局限性: 1、两个序列的长度需要相同,但在实际研究工作中, 找到满足上述条件的序列并非易事。2、该方法也无法进行异步相似度计算，因此会对实际上较为相似的两个时间序列其相似性做出误判。</p><h3 id="further-discussion">further discussion</h3><p>1.能不能做成因子</p><p>2.使用分钟频的数据是否会更有效？（or selected minutefrequency，比如volatility集聚现象重合）</p><h1 id="section-1">11.28</h1><p>从过往研究来看，度量时间序列相似性的方法大致分为4类：</p><p>第一类为<strong>基于特征的相似性度量方法</strong>，如相关系数、互信息等；第二类为<strong>锁步（时间序列“一对一”比较）的距离度量方法</strong>，典型方法有闵可夫斯基距离（可衍生为曼哈顿距离、欧氏距离、切比雪夫距离）、Hausdorff距离、余弦相似度等；第三类为<strong>弹性（允许时间序列“一对多”比较）的距离度量方法</strong>，代表方法为动态时间弯曲距离（DTW）、编辑距离（EDR）、最长公共子序列（LCSS）；第四类方法关注时间序列的<strong>变化相似性</strong>，如ARMA、HMM等。</p><h2 id="dtw">DTW</h2><h3 id="定义">定义</h3><p>对于时间序列 <span class="math inline">\(X\)</span> 和 <span class="math inline">\(Y\)</span> ，定义非负函数 <span class="math inline">\(f\)</span> 来衡量时间序列中的点 <span class="math inline">\(x \_\)</span>i和点 <span class="math inline">\(y\)</span> j的距离: <span class="math display">\[d(i, j)=f\left(x_{-} i, y \_j\right) \geq 0,\]</span></p><p>除常见的欧氏距离外，距离函数f也可以选取余弦相似度、汉明距离、曼哈顿距离、切比雪夫距离等其他距离度量方法。如果时间序列是多维的，则将每个维度的距离相加即可（确保各维度量纲一致）。</p><p>定义了时间序列中点与点的距离之后，两段时间序列即可形成一个 <span class="math inline">\(N \times M\)</span>的点阵，从点阵的右上角到左下角可以形成一条弯曲路径 (Warping Path)。</p><p>给定弯曲路径之后，便可以计算时间序列X和Y的标准化累计时间弯曲距离。另外，为了确保弯曲路径的合理性，通常需要满足3 大基本条件: - 终点条件 (EndpointConstraints)：要求弯曲路径的起点和终点必须为点阵平面的对角单元； -连续性条件 (Local ContinuityConstraints)：要求弯曲路径的每一步为相邻的单元（包括对角相邻单元)； -单调性条件 (MonotonicityConditions)：由于语音序列或证券交易数据等时间序列是有时序性的(时间不可倒流)，所以从实际意义出发，弯曲路径在点阵图上必须是单调的。</p><p>显然，满足以上3个条件的路径有很多条，选取哪条路径来计算DTW距离呢?一个很自然的想法是选取使得DTW距离最小的路径，具体推导过程需要利用动态规划算法（DynamicProgramming），这里不展开说明。最后，使得DTW距离最小化的最佳匹配路径需满足如下递归条件：<span class="math display">\[\delta(i, j)=d(i, j)+\min [\delta(i-1, j), \delta(i-1, j-1), \delta(i,j-1)]\]</span> <img src="/post/32dc4a05/640.png" alt="640"></p><h3 id="传统的dtw算法存在两点缺陷"><strong>传统的DTW算法存在两点缺陷</strong></h3><figure><img src="/post/32dc4a05/640%20(1).png" alt="640 (1)"><figcaption aria-hidden="true">640 (1)</figcaption></figure><p>1）算法对时间序列进行伸缩和平移时，可能存在过度伸缩或平移，产生时间序列点之间的“病态匹配”，如图8所示，B为两段时间序列的真实匹配情况，C为DTW算法下的匹配结果，显然较不合理，某些地方被过度平移和伸缩了</p><p>2）传统DTW算法运算量较大，时间复杂度较高。对于择时策略本身而言，显然第一个问题更加重要，如果不是高频策略，则运算复杂度对策略的影响不大，我们更关注距离度量的精度和策略实际效果。本节将针对“病态匹配”的问题对DTW算法做出改进，以提升匹配精度和策略效果。</p><hr><h3 id="病态匹配的改进方向">“病态匹配”的改进方向：</h3><p>加权DTW算法（Weighted Dynamic TimeWarping，WDTW）、导数DTW算法（Derivative Dynamic TimeWarping，DDTW）、步模式（Step Pattern）、全局约束（GlobalConstraints）</p><h4 id="全局约束-global-constraints">(1) 全局约束 (GlobalConstraints)</h4><p><strong>限制匹配路径尽可能接近对角线</strong>、<strong>对匹配路径整体进行限制</strong></p><p>传统的DTW算法允许匹配路径可以在图6中的点阵中任意生成（需满足上一节的3个基本条件），全局约束要求匹配路径只能在限定的区域内生成，常用的全局约束方法有Sakoe-ChibaConstraint和Itakura Parallelogram等。 Sakoe-ChibaConstraint，需设定窗口限制参数r，即最佳匹配路径须在距点阵对角线距离为r的区域内；ItakuraParallelogram将匹配路径限定在一个平行四边形区域中，平行四边形的四条边的斜率分别为2和0.5。</p><h4 id="局部约束local-constraints"><strong>(2) 局部约束（LocalConstraints）</strong></h4><p><strong>对匹配路径中每一步进行约束</strong></p><h5 id="a.步模式">a.<strong>步模式</strong></h5><p><strong>放松连续性条件，即可以与不相邻的点匹配，便能形成新的递归方式，即步模式</strong><img src="/post/32dc4a05/640%20(2).png" alt="640 (2)"></p><h5 id="b.加权方式">b.<strong>加权方式</strong></h5><figure><img src="/post/32dc4a05/640%20(3)-1701157416807-7.png" alt="640 (3)"><figcaption aria-hidden="true">640 (3)</figcaption></figure><p>模型有2个主要参数：序列长度l和距离阈值k，其中距离阈值k设置目的是当筛选相似的历史序列时，选取距离小于k的历史序列。若k选取过小，则会遗漏相似的历史序列；若k选取过大，则实际上不相似的历史序列也会被选入。</p><h3 id="我的问题">我的问题：</h3><p>1.能否利用聚类算法通过计算出DTW的相关度从而二次聚类？</p><p>做法参考：https://mp.weixin.qq.com/s/ODXny7pqV12LQ59TDkFkcQ</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 实习 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>搭建自用中低频回测系统</title>
+      <link href="/post/d071063d.html"/>
+      <url>/post/d071063d.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>C++学习、刷题之旅</title>
       <link href="/post/e4f86aa1.html"/>
       <url>/post/e4f86aa1.html</url>
@@ -25,30 +57,11 @@
     
     
     <entry>
-      <title>因子优化code及思路</title>
-      <link href="/post/67be61b8.html"/>
-      <url>/post/67be61b8.html</url>
-      
-        <content type="html"><![CDATA[<p>本文用于记录我在尝试提升基本面因子性能的时候想要进行的操作及其code，有一部分已封装为类，在完成本周week7的工作后会把写好的函数都封装到Factor_analyzer中。</p>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> 实习 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>实习思考</title>
       <link href="/post/e850ef3b.html"/>
       <url>/post/e850ef3b.html</url>
       
-        <content type="html"><![CDATA[<h1 id="实习思考">实习思考</h1><h2 id="前言">前言</h2><p>​本文用来记录我在第一段量化实习中的思考，以及由此产生的关于学习方向的灵感。</p><h2 id="对于整体">对于整体</h2><p>​“量化投资始终坚持以基本面为核心，同时结合价量信息的方式，立足从投资的本源看问题，以长期有效的逻辑出发构建基础框架，再与交易逻辑相融合。无论是基本面还是价量，对每一类信息都会深挖背后的逻辑与含义，在此基础上，采用传统数学建模与领先的人工智能和机器学习技术结合的方式，不断随着市场结构与交易行为进行优化迭代。”</p><p>1.是如何将基本面因子与量价因子结合的，使用有效前沿吗？</p><p>2.交易逻辑+基础框架，是指因子组合之后划分为某个风格框架吗？</p><p>3.因子表现较好的作为多因子框架的因子，表现较差的作为机器学习模型的因子吗？这两者是如何结合的呢，也是划分为某个风格的吗？如何判断市场结构和交易行为，这是涉及到根据微观结构调整权重吗？</p><h2 id="挖因子">挖因子</h2><p>1.对于中低频的基本面因子，正确的挖掘模式是什么样的呢，有哪些挖掘方法，效率如何？</p><p>2.对于高频因子，如何判断因子是处于正常波动还是失效的状态</p><p>3.如何在收益率和可解释性（逻辑性）进行取舍</p><h2 id="因子组合">因子组合</h2><p>1.看完石川《因子投资方法与实践》后写</p><h2 id="交易信号">交易信号</h2><p>1.交易信号的分布需要服从norm吗？</p><p>2.根据计算出的alpha值如何分配position？</p><h2 id="回测框架">回测框架</h2><p><font color="blue">Alphalens、Backtrader</font></p><p><strong>争取在2024年前使用backtrader跑一次回测</strong></p><h2 id="绩效归因">绩效归因</h2><p>Brison框架</p>]]></content>
+        <content type="html"><![CDATA[<h1 id="实习思考"><a href="#实习思考" class="headerlink" title="实习思考"></a>实习思考</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>​    本文用来记录我在第一段量化实习中的思考，以及由此产生的关于学习方向的灵感。</p><h2 id="对于整体"><a href="#对于整体" class="headerlink" title="对于整体"></a>对于整体</h2><p>​    “量化投资始终坚持以基本面为核心，同时结合价量信息的方式，立足从投资的本源看问题，以长期有效的逻辑出发构建基础框架，再与交易逻辑相融合。无论是基本面还是价量，对每一类信息都会深挖背后的逻辑与含义，在此基础上，采用传统数学建模与领先的人工智能和机器学习技术结合的方式，不断随着市场结构与交易行为进行优化迭代。”</p><p>1.是如何将基本面因子与量价因子结合的，使用有效前沿吗？</p><p>2.交易逻辑+基础框架，是指因子组合之后划分为某个风格框架吗？</p><p>3.因子表现较好的作为多因子框架的因子，表现较差的作为机器学习模型的因子吗？这两者是如何结合的呢，也是划分为某个风格的吗？如何判断市场结构和交易行为，这是涉及到根据微观结构调整权重吗？</p><h2 id="挖因子"><a href="#挖因子" class="headerlink" title="挖因子"></a>挖因子</h2><p>1.对于中低频的基本面因子，正确的挖掘模式是什么样的呢，有哪些挖掘方法，效率如何？</p><p>2.对于高频因子，如何判断因子是处于正常波动还是失效的状态</p><p>3.如何在收益率和可解释性（逻辑性）进行取舍</p><h2 id="因子组合"><a href="#因子组合" class="headerlink" title="因子组合"></a>因子组合</h2><p>1.看完石川《因子投资方法与实践》后写</p><h2 id="交易信号"><a href="#交易信号" class="headerlink" title="交易信号"></a>交易信号</h2><h3 id="1-交易信号的分布需要服从norm吗？"><a href="#1-交易信号的分布需要服从norm吗？" class="headerlink" title="1.交易信号的分布需要服从norm吗？"></a>1.交易信号的分布需要服从norm吗？</h3><p>A：需要具体情况具体分析，比如需要分析异常值对应的标的是什么类型的。对于偏态厚尾信号的处理，可以使用power rank，展成均匀分布后根据表现改变power分配头部alpha的权重。-2023.11.27</p><h3 id="2-根据计算出的alpha值如何分配position？"><a href="#2-根据计算出的alpha值如何分配position？" class="headerlink" title="2.根据计算出的alpha值如何分配position？"></a>2.根据计算出的alpha值如何分配position？</h3><p>A：INSN、过滤invalid pool后，对pwrk的alpha值的非nan值的头部50%做多、尾部50%做空。 -2023.11.27</p><h2 id="回测框架"><a href="#回测框架" class="headerlink" title="回测框架"></a>回测框架</h2><font color="blue">Alphalens、Backtrader</font><p><strong><del>争取在2024年前使用backtrader跑一次回测</del></strong>    已完成-2023.11.27</p><h2 id="绩效归因"><a href="#绩效归因" class="headerlink" title="绩效归因"></a>绩效归因</h2><p>Brison框架</p><h2 id="宏观择时框架"><a href="#宏观择时框架" class="headerlink" title="宏观择时框架"></a>宏观择时框架</h2><p>基于周期理论、宏观数据，划分金融市场属于哪个时域（用Regime Switching、HMM类似思想的ML、RL模型）</p><h2 id="RL调参"><a href="#RL调参" class="headerlink" title="RL调参"></a>RL调参</h2><p>通过RL模型，选择合适的训练长度和预测长度，并且学习对应的可视化效果</p><p><strong>争取在2024年寒假跑一次机器学习模型来解决问这个问题</strong></p><h2 id="Qlib"><a href="#Qlib" class="headerlink" title="Qlib"></a>Qlib</h2><p>争取跑通qlib平台上用到的code，至少理解有哪些包、对应的功能<a href="https://mp.weixin.qq.com/s/W2xRQHrwphbl1Um7_BkGgQ">https://mp.weixin.qq.com/s/W2xRQHrwphbl1Um7_BkGgQ</a></p>]]></content>
       
       
       
@@ -67,9 +80,15 @@
       <link href="/post/698179e8.html"/>
       <url>/post/698179e8.html</url>
       
-        <content type="html"><![CDATA[<p>1.如何根据市场交易规则（最小交易单位）来执行计算出的交易信号。</p><p>(考虑交易手数的话，需要解一个以最小化持仓误差为目标函数的、以总资金为硬约束的整数线性规划问题)</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="1-如何根据市场交易规则（最小交易单位）来执行计算出的交易信号。"><a href="#1-如何根据市场交易规则（最小交易单位）来执行计算出的交易信号。" class="headerlink" title="1.如何根据市场交易规则（最小交易单位）来执行计算出的交易信号。"></a>1.如何根据市场交易规则（最小交易单位）来执行计算出的交易信号。</h2><p>(考虑交易手数的话，需要解一个以最小化持仓误差为目标函数的、以总资金为硬约束的整数线性规划问题)</p><h2 id="2-利用alpha值生成持仓信号"><a href="#2-利用alpha值生成持仓信号" class="headerlink" title="2.利用alpha值生成持仓信号"></a>2.利用alpha值生成持仓信号</h2><p>在利用经过行业市值中性化、过滤掉涨跌停的final alpha values计算对应的持仓比例、多空持仓情况时，可以考虑使用power rank。<br><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">cal_cs_rank</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> maxvalue<span class="token operator">=</span><span class="token boolean">None</span><span class="token punctuation">,</span>minvalue<span class="token operator">=</span><span class="token boolean">None</span><span class="token punctuation">)</span><span class="token punctuation">:</span>    <span class="token triple-quoted-string string">'''    部分经过删除处理    '''</span>    res <span class="token operator">=</span> np_nan_array<span class="token punctuation">(</span>shape <span class="token operator">=</span> <span class="token punctuation">(</span>x<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">)</span><span class="token punctuation">,</span> dtype<span class="token operator">=</span><span class="token string">"float64"</span><span class="token punctuation">)</span>    res <span class="token operator">=</span> <span class="token punctuation">(</span>res <span class="token operator">-</span> np<span class="token punctuation">.</span>nanmin<span class="token punctuation">(</span>res<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token punctuation">(</span>np<span class="token punctuation">.</span>nanmax<span class="token punctuation">(</span>res<span class="token punctuation">)</span> <span class="token operator">-</span> np<span class="token punctuation">.</span>nanmin<span class="token punctuation">(</span>res<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token punctuation">(</span>maxvalue <span class="token operator">-</span> minvalue<span class="token punctuation">)</span> <span class="token operator">+</span> minvalue    <span class="token keyword">return</span> res  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>具体是把因子先利用rank函数展成(-1,1)的均匀分布形式，再根据对于头部权重的考虑，对展开后的值取3次方、5次方。</p><p><strong>1次方就是均匀分布</strong></p><pre class="line-numbers language-python" data-language="python"><code class="language-python">plot_distribution<span class="token punctuation">(</span>Analyzer<span class="token punctuation">.</span>industry_analyze_detail<span class="token punctuation">(</span><span class="token string">'2021-03-29'</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token string">'factor'</span><span class="token punctuation">]</span><span class="token punctuation">.</span>values<span class="token punctuation">,</span><span class="token string">'power=1'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p><img src="/post/698179e8/1次.png" alt="1次"></p><p>取奇次幂可以放大头部权重</p><div class="table-container"><table><thead><tr><th>power=3</th><th>power=5</th></tr></thead><tbody><tr><td><code>plot_distribution(tmp**3,&#39;power=3&#39;)</code></td><td><code>plot_distribution(tmp**5,&#39;power=5&#39;)</code></td></tr><tr><td><img src="/post/698179e8/3次.png" alt="3次"></td><td><img src="/post/698179e8/5次.png" alt="5次"></td></tr></tbody></table></div><h2 id="3-回测计算的是单利"><a href="#3-回测计算的是单利" class="headerlink" title="3.回测计算的是单利"></a>3.回测计算的是单利</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python">df<span class="token punctuation">[</span><span class="token string">'ac_returns'</span><span class="token punctuation">]</span> <span class="token operator">=</span> df<span class="token punctuation">[</span><span class="token string">'returns'</span><span class="token punctuation">]</span><span class="token punctuation">.</span>cumsum<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h2 id="4-因子组合优化的最简单形式"><a href="#4-因子组合优化的最简单形式" class="headerlink" title="4.因子组合优化的最简单形式"></a>4.因子组合优化的最简单形式</h2><p>本报告根据模型滚动训练和预测的结果，将所有测试集上的预测结果作为最终合成的打分输出用于策略组合构建，每5个交易日进行一次调仓，仓位调整逻辑是在一定的约束条件下最大化加权模型预测打分值，同时限制组合的换手。每次调仓日的模型预测输出的股票得分向量记为 $\text{score}_{t}$，当期目标权重向量记为 $w_t$，优化目标方程为:</p><script type="math/tex; mode=display">\begin{aligned}& \max \left(\sum_{i=1}^n w_{t, i} * \text { score }_{t, i}-\alpha\left|w_t-w_{t-1}\right|\right) \\& \text { s.t }\left\{\begin{array}{l}-0.005 I \leq w_t-w_{\text {benchmark }} \leq 0.005 I \\\sum_{i=1}^n w_{t, i}=1 \\w_t \geq 0\end{array}\right.\end{aligned}</script><p>其中，$\alpha$用于约束换手率，取值 0.05 ；$ w_{benchmark}$为股票的基准权重向量； 1 是所有元素为 1 的长度为 $w_t$的向量，个股权重相对于基准成分股权重的偏离限制在正负 $0.5 \%$ 内。策略每 5 个交易日在收盘后通过上述优化目标和条件求解权重。</p>]]></content>
       
       
+      
+        <tags>
+            
+            <tag> 实习 </tag>
+            
+        </tags>
       
     </entry>
     

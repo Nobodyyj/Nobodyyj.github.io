@@ -1,0 +1,292 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>股票形态相似度研究 | Huang Yujie's Blog</title><meta name="author" content="Huang Yujie,struggle_hyj@outlook.com"><meta name="copyright" content="Huang Yujie"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="1.东财数据+供应链数据 2.对东财数据降噪处理，计算簇内 3.在某一个时间节点，我们回看过去已知的概念数据or供应链数据 机器学习做出来的效果不好，所以尝试对数据进行降噪处理 11.27 具体操作 将概念算出来之后，得到每一天每个概念内股票的关系强度（比如等权的pearson系数），和宽基指数内的关系强度进行对比。 可以尝试将concept内关系最弱的股票剔除，看概念内股票的关系有">
+<meta property="og:type" content="article">
+<meta property="og:title" content="股票形态相似度研究">
+<meta property="og:url" content="https://nobodyyj.github.io/post/32dc4a05.html">
+<meta property="og:site_name" content="Huang Yujie&#39;s Blog">
+<meta property="og:description" content="1.东财数据+供应链数据 2.对东财数据降噪处理，计算簇内 3.在某一个时间节点，我们回看过去已知的概念数据or供应链数据 机器学习做出来的效果不好，所以尝试对数据进行降噪处理 11.27 具体操作 将概念算出来之后，得到每一天每个概念内股票的关系强度（比如等权的pearson系数），和宽基指数内的关系强度进行对比。 可以尝试将concept内关系最弱的股票剔除，看概念内股票的关系有">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://nobodyyj.github.io/img/header2.png">
+<meta property="article:published_time" content="2023-11-28T13:33:27.000Z">
+<meta property="article:modified_time" content="2023-11-28T13:41:58.561Z">
+<meta property="article:author" content="Huang Yujie">
+<meta property="article:tag" content="实习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nobodyyj.github.io/img/header2.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://nobodyyj.github.io/post/32dc4a05.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: {"limitDay":500000,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '股票形态相似度研究',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-11-28 21:41:58'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Huang Yujie's Blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/header2.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/tmp_bg.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Huang Yujie's Blog"><span class="site-name">Huang Yujie's Blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">股票形态相似度研究</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-11-28T13:33:27.000Z" title="发表于 2023-11-28 21:33:27">2023-11-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-11-28T13:41:58.561Z" title="更新于 2023-11-28 21:41:58">2023-11-28</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>5分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="股票形态相似度研究"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><font color="red">1.东财数据+供应链数据</font></p>
+<p><font color="red">2.对东财数据降噪处理，计算簇内</font></p>
+<p><font color="red">3.在某一个时间节点，我们回看过去已知的概念数据or供应链数据</font></p>
+<p><font color="red">机器学习做出来的效果不好，所以尝试对数据进行降噪处理</font></p>
+<h1 id="section">11.27</h1>
+<h3 id="具体操作">具体操作</h3>
+<p>将概念算出来之后，得到每一天每个概念内股票的关系强度（比如等权的pearson系数），和宽基指数内的关系强度进行对比。
+可以尝试将concept内关系最弱的股票剔除，看概念内股票的关系有没有明显增强。</p>
+<h3 id="先上手计算欧氏距离">先上手计算欧氏距离</h3>
+<p>欧氏距离为常见的计算时间序列相似度的方法，该方法可以直接衡量两个时间序列之间的距离，其计算公式为:
+<span class="math display">\[
+D=\sqrt{\sum_{i=1}^N\left(X_i-Y_i\right)^2}
+\]</span></p>
+<p>其中 <span class="math inline">\(\mathrm{N}\)</span> 为序列 <span class="math inline">\(\mathrm{X}\)</span> 和序列 <span class="math inline">\(\mathrm{Y}\)</span> 的长度。 由上述公式可以看出,
+若要计算两个序列之间的欧氏距离, 有两个局限性: 1、两个序列的长度需要相同,
+但在实际研究工作中, 找到满足上述条件的序列并非易事。
+2、该方法也无法进行异步相似度计算，因此会对实际上较为相似的两个时间序列其相似性做出误判。</p>
+<h3 id="further-discussion">further discussion</h3>
+<p>1.能不能做成因子</p>
+<p>2.使用分钟频的数据是否会更有效？（or selected minute
+frequency，比如volatility集聚现象重合）</p>
+<h1 id="section-1">11.28</h1>
+<p>从过往研究来看，度量时间序列相似性的方法大致分为4类：</p>
+<p>第一类为<strong>基于特征的相似性度量方法</strong>，如相关系数、互信息等；
+第二类为<strong>锁步（时间序列“一对一”比较）的距离度量方法</strong>，典型方法有闵可夫斯基距离（可衍生为曼哈顿距离、欧氏距离、切比雪夫距离）、Hausdorff距离、余弦相似度等；
+第三类为<strong>弹性（允许时间序列“一对多”比较）的距离度量方法</strong>，代表方法为动态时间弯曲距离（DTW）、编辑距离（EDR）、最长公共子序列（LCSS）；
+第四类方法关注时间序列的<strong>变化相似性</strong>，如ARMA、HMM等。</p>
+<h2 id="dtw">DTW</h2>
+<h3 id="定义">定义</h3>
+<p>对于时间序列 <span class="math inline">\(X\)</span> 和 <span class="math inline">\(Y\)</span> ，定义非负函数 <span class="math inline">\(f\)</span> 来衡量时间序列中的点 <span class="math inline">\(x \_\)</span>i和点 <span class="math inline">\(y\)</span> j的距离: <span class="math display">\[
+d(i, j)=f\left(x_{-} i, y \_j\right) \geq 0,
+\]</span></p>
+<p>除常见的欧氏距离外，距离函数f也可以选取余弦相似度、汉明距离、曼哈顿距离、切比雪夫距离等其他距离度量方法。如果时间序列是多维的，则将每个维度的距离相加即可（确保各维度量纲一致）。</p>
+<p>定义了时间序列中点与点的距离之后，两段时间序列即可形成一个 <span class="math inline">\(N \times M\)</span>
+的点阵，从点阵的右上角到左下角可以形成一条弯曲路径 (Warping Path)。</p>
+<p>给定弯曲路径之后，便可以计算时间序列X和Y的标准化累计时间弯曲距离。另外，为了确保弯曲路径的合理性，通常需要满足
+3 大基本条件: - 终点条件 (Endpoint
+Constraints)：要求弯曲路径的起点和终点必须为点阵平面的对角单元； -
+连续性条件 (Local Continuity
+Constraints)：要求弯曲路径的每一步为相邻的单元（包括对角相邻单元)； -
+单调性条件 (Monotonicity
+Conditions)：由于语音序列或证券交易数据等时间序列是有时序性的
+(时间不可倒流)，所以从实际意义出发，弯曲路径在点阵图上必须是单调的。</p>
+<p>显然，满足以上3个条件的路径有很多条，选取哪条路径来计算DTW距离呢?
+一个很自然的想法是选取使得DTW
+距离最小的路径，具体推导过程需要利用动态规划算法（Dynamic
+Programming），这里不展开说明。最后，使得DTW距离最小化的最佳匹配路径需满足如下递归条件：
+<span class="math display">\[
+\delta(i, j)=d(i, j)+\min [\delta(i-1, j), \delta(i-1, j-1), \delta(i,
+j-1)]
+\]</span> <img src="/post/32dc4a05/640.png" alt="640"></p>
+<h3 id="传统的dtw算法存在两点缺陷"><strong>传统的DTW算法存在两点缺陷</strong></h3>
+<figure>
+<img src="/post/32dc4a05/640%20(1).png" alt="640 (1)">
+<figcaption aria-hidden="true">640 (1)</figcaption>
+</figure>
+<p>1）算法对时间序列进行伸缩和平移时，可能存在过度伸缩或平移，产生时间序列点之间的“病态匹配”，如图8所示，B为两段时间序列的真实匹配情况，C为DTW算法下的匹配结果，显然较不合理，某些地方被过度平移和伸缩了</p>
+<p>2）传统DTW算法运算量较大，时间复杂度较高。对于择时策略本身而言，显然第一个问题更加重要，如果不是高频策略，则运算复杂度对策略的影响不大，我们更关注距离度量的精度和策略实际效果。本节将针对“病态匹配”的问题对DTW算法做出改进，以提升匹配精度和策略效果。</p>
+<hr>
+<h3 id="病态匹配的改进方向">“病态匹配”的改进方向：</h3>
+<p>加权DTW算法（Weighted Dynamic Time
+Warping，WDTW）、导数DTW算法（Derivative Dynamic Time
+Warping，DDTW）、步模式（Step Pattern）、全局约束（Global
+Constraints）</p>
+<h4 id="全局约束-global-constraints">(1) 全局约束 (Global
+Constraints)</h4>
+<p><strong>限制匹配路径尽可能接近对角线</strong>、<strong>对匹配路径整体进行限制</strong></p>
+<p>传统的DTW算法允许匹配路径可以在图6中的点阵中任意生成（需满足上一节的3个基本条件），全局约束要求匹配路径只能在限定的区域内生成，常用的全局约束方法有Sakoe-Chiba
+Constraint和Itakura Parallelogram等。 Sakoe-Chiba
+Constraint，需设定窗口限制参数r，即最佳匹配路径须在距点阵对角线距离为r的区域内；Itakura
+Parallelogram将匹配路径限定在一个平行四边形区域中，平行四边形的四条边的斜率分别为2和0.5。</p>
+<h4 id="局部约束local-constraints"><strong>(2) 局部约束（Local
+Constraints）</strong></h4>
+<p><strong>对匹配路径中每一步进行约束</strong></p>
+<h5 id="a.步模式">a.<strong>步模式</strong></h5>
+<p><strong>放松连续性条件，即可以与不相邻的点匹配，便能形成新的递归方式，即步模式</strong><img src="/post/32dc4a05/640%20(2).png" alt="640 (2)"></p>
+<h5 id="b.加权方式">b.<strong>加权方式</strong></h5>
+<figure>
+<img src="/post/32dc4a05/640%20(3)-1701157416807-7.png" alt="640 (3)">
+<figcaption aria-hidden="true">640 (3)</figcaption>
+</figure>
+<p>模型有2个主要参数：序列长度l和距离阈值k，其中距离阈值k设置目的是当筛选相似的历史序列时，选取距离小于k的历史序列。若k选取过小，则会遗漏相似的历史序列；若k选取过大，则实际上不相似的历史序列也会被选入。</p>
+<h3 id="我的问题">我的问题：</h3>
+<p>1.能否利用聚类算法通过计算出DTW的相关度从而二次聚类？</p>
+<p>做法参考：https://mp.weixin.qq.com/s/ODXny7pqV12LQ59TDkFkcQ</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://nobodyyj.github.io">Huang Yujie</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://nobodyyj.github.io/post/32dc4a05.html">https://nobodyyj.github.io/post/32dc4a05.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://nobodyyj.github.io" target="_blank">Huang Yujie's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%AE%9E%E4%B9%A0/">实习</a></div><div class="post_share"><div class="social-share" data-image="/img/header2.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/post/d071063d.html" title="搭建自用中低频回测系统"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">搭建自用中低频回测系统</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/post/698179e8.html" title="实习中的idea"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-11</div><div class="title">实习中的idea</div></div></a></div><div><a href="/post/e850ef3b.html" title="实习思考"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-11-12</div><div class="title">实习思考</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/header2.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Huang Yujie</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Nobodyyj"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Nobodyyj" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:struggle_hyj@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#section"><span class="toc-text">11.27</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B7%E4%BD%93%E6%93%8D%E4%BD%9C"><span class="toc-text">具体操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%88%E4%B8%8A%E6%89%8B%E8%AE%A1%E7%AE%97%E6%AC%A7%E6%B0%8F%E8%B7%9D%E7%A6%BB"><span class="toc-text">先上手计算欧氏距离</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#further-discussion"><span class="toc-text">further discussion</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#section-1"><span class="toc-text">11.28</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#dtw"><span class="toc-text">DTW</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%A0%E7%BB%9F%E7%9A%84dtw%E7%AE%97%E6%B3%95%E5%AD%98%E5%9C%A8%E4%B8%A4%E7%82%B9%E7%BC%BA%E9%99%B7"><span class="toc-text">传统的DTW算法存在两点缺陷</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%97%85%E6%80%81%E5%8C%B9%E9%85%8D%E7%9A%84%E6%94%B9%E8%BF%9B%E6%96%B9%E5%90%91"><span class="toc-text">“病态匹配”的改进方向：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E7%BA%A6%E6%9D%9F-global-constraints"><span class="toc-text">(1) 全局约束 (Global
+Constraints)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B1%80%E9%83%A8%E7%BA%A6%E6%9D%9Flocal-constraints"><span class="toc-text">(2) 局部约束（Local
+Constraints）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#a.%E6%AD%A5%E6%A8%A1%E5%BC%8F"><span class="toc-text">a.步模式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#b.%E5%8A%A0%E6%9D%83%E6%96%B9%E5%BC%8F"><span class="toc-text">b.加权方式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%91%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">我的问题：</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/32dc4a05.html" title="股票形态相似度研究">股票形态相似度研究</a><time datetime="2023-11-28T13:33:27.000Z" title="发表于 2023-11-28 21:33:27">2023-11-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/d071063d.html" title="搭建自用中低频回测系统">搭建自用中低频回测系统</a><time datetime="2023-11-26T02:40:46.000Z" title="发表于 2023-11-26 10:40:46">2023-11-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/e4f86aa1.html" title="C++学习、刷题之旅">C++学习、刷题之旅</a><time datetime="2023-11-22T15:04:55.000Z" title="发表于 2023-11-22 23:04:55">2023-11-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/e850ef3b.html" title="实习思考">实习思考</a><time datetime="2023-11-12T04:35:38.000Z" title="发表于 2023-11-12 12:35:38">2023-11-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/698179e8.html" title="实习中的idea">实习中的idea</a><time datetime="2023-10-11T02:29:03.000Z" title="发表于 2023-10-11 10:29:03">2023-10-11</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/tmp_bg.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2023 By Huang Yujie</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
