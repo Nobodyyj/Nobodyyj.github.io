@@ -6,7 +6,7 @@
   <link href="https://nobodyyj.github.io/atom.xml" rel="self"/>
   
   <link href="https://nobodyyj.github.io/"/>
-  <updated>2023-11-28T13:41:58.561Z</updated>
+  <updated>2023-12-10T15:49:07.728Z</updated>
   <id>https://nobodyyj.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>第一次高频交易比赛赛后感悟</title>
+    <link href="https://nobodyyj.github.io/post/d5a2488e.html"/>
+    <id>https://nobodyyj.github.io/post/d5a2488e.html</id>
+    <published>2023-12-10T15:13:28.000Z</published>
+    <updated>2023-12-10T15:49:07.728Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="第一次高频交易比赛赛后感悟">第一次高频交易比赛赛后感悟</h1><p>​我的第一次量化比赛参赛之旅在今天画上了句号，总共350+队伍只有前50能进复赛，我最后以rank60止步初赛，感觉十分可惜。为了不浪费我这半个月来在高频研究熬的好几个夜，我决定赶在自己参赛经历淡忘前，趁热打铁写下我参加这个高频交易比赛的感悟。（2023.12.10，希望2024.12.10的我能干到决赛一雪前耻）。</p><p>​ 本次参赛的感悟可分为技术栈、微观实盘、宏观策略和未来学习方向。</p><h2 id="一技术栈">一、技术栈</h2><p>​这是我第一次与其他人合作代码，深刻认识到使用<strong>git</strong>进行代码协作的必要性。在版本回滚和合并多人工作成果方面，git的存在简直是雪中送炭，如果不使用这个工作流很可能项目会存在大量的<strong>bug和代码沟通障碍</strong>。</p><p>​此外，cpp是进行高频交易必不可少的语言，即使使用并行、异步、numba等库能大大提高python语言的运行速度，但是归根到底还得是c&amp;cpp。在获取远程交易所信息的时候，需要熟悉如何使用并行、异步等库来减少请求等待时间。</p><h2 id="二微观实盘">二、微观实盘</h2><p>​这个方面是导致我止步初赛最关键的原因。在高频交易中，我认为因子很可能是一个黑箱一样的存在。如果不去检测实盘交易后LOB的变化情况、也不去监控订单的执行状态（比如是否挂单成功、是否完全成交、是否撤单成果），策略的收益来源完全是凭运气的（2023.12.10下午求神拜佛希望自己持仓标的涨一涨这种傻X操作我希望止步于稚嫩的本科时代，太丢人了）。</p><p>​以九坤的这次股票模拟交易比赛为例，下单、撤单、查询订单状态、获取股票实时LOB、获取UserPnL、Sharpe等数据都是需要通过调用api接口的，而这个API接口是具有上限的。从流程上来说，我需要在交易信号发出后，找到标的的code输入buyprice&amp;buy volume，并记录下response的orderindex，买单报单成功后，再根据orderindex查询订单的成交状态，交易成功后，再根据实时的盘口价格，计算出对应的sellprice&amp;sell volume，报送给交易所。如果sellorder报单成功，再记录下sell order的orderindex，再下一次开盘前or本次收盘后查询sell order的trade volume&amp;remain volume，完成实时头寸状态监控。比如如果我sell了800shares，只有500share traded，还剩下的300share会冻结，如果此时bidprice下跌，低于我的sellprice，我的这部分头寸就必须要撤回再次挂出300share&amp;bidprice1的卖单，<strong>否则就会存在风险敞口暴露，策略的收益被beta所取代</strong>。</p><p>​除了这个订单管理系统之外，止盈止损、下单仓位控制等操作，也是非常重要的模块，如果不完善这几个模块，是没有办法控制好策略的pnl，甚至没有办法控制好策略的收益来源。</p><h2 id="三宏观策略">三、宏观策略</h2><p>​宏观角度，本次比赛超脱了我所习惯的股票基本面信息，完全是从量价的角度来进行日内回转的股票交易。目前我认为，高频交易最重要的不是玩成梭哈式的读博游戏，而是通过高速执行的订单，完成短时间内的<strong>利润锁定</strong>o<strong>r回撤控制</strong>，这个比写出一个好的alpha更加重要。如果要做高频操作，一定要完善各个模块，厘清每一笔交易信号发出后，持仓标的、可用资金、多头市值是否符合自己的策略，这个环节在执行中真的是想起来简单做起来难。</p><h2 id="四未来学习方向">四、未来学习方向</h2><p>​ 1.<strong>RL、DL，CNN、RNN类、GNN类、Tranformer、GAN</strong></p><p>​ 2.机器学习对于混频因子的融合、</p><p>​ 3.基于Markov转换的时序模型</p><p>​ 4.做市商策略</p><p>​ 5.幌骗策略</p><p>​6.更优秀、高效、快速的订单管理数据存储格式，比如我现在用的是dataframe，因为groupby函数很高效</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;第一次高频交易比赛赛后感悟&quot;&gt;第一次高频交易比赛赛后感悟&lt;/h1&gt;
+&lt;p&gt;​
+我的第一次量化比赛参赛之旅在今天画上了句号，总共350+队伍只有前50能进复赛，我最后以rank
+60止步初赛，感觉十分可惜。为了不浪费我这半个月来在高频研究熬的好几个夜，我决定赶</summary>
+      
+    
+    
+    
+    
+    <category term="高频" scheme="https://nobodyyj.github.io/tags/%E9%AB%98%E9%A2%91/"/>
+    
+    <category term="学习" scheme="https://nobodyyj.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
   
   <entry>
     <title>股票形态相似度研究</title>
