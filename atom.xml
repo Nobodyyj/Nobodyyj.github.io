@@ -6,7 +6,7 @@
   <link href="https://nobodyyj.github.io/atom.xml" rel="self"/>
   
   <link href="https://nobodyyj.github.io/"/>
-  <updated>2023-12-14T03:18:12.305Z</updated>
+  <updated>2023-12-14T05:28:26.452Z</updated>
   <id>https://nobodyyj.github.io/</id>
   
   <author>
@@ -21,15 +21,17 @@
     <link href="https://nobodyyj.github.io/post/bb04665f.html"/>
     <id>https://nobodyyj.github.io/post/bb04665f.html</id>
     <published>2023-12-14T03:10:12.000Z</published>
-    <updated>2023-12-14T03:18:12.305Z</updated>
+    <updated>2023-12-14T05:28:26.452Z</updated>
     
-    <content type="html"><![CDATA[<p>用于记录我找到的好的学习资源，以便厘清学习的优先度</p><h2 id="一、量化平台-amp-框架"><a href="#一、量化平台-amp-框架" class="headerlink" title="一、量化平台&amp;框架"></a>一、量化平台&amp;框架</h2><h3 id="1-BackTrader"><a href="#1-BackTrader" class="headerlink" title="1.BackTrader"></a>1.BackTrader</h3><p><a href="https://github.com/QuantWorld2022/backtrader">QuantWorld2022/backtrader (github.com)</a></p><h2 id="2-Vnpy"><a href="#2-Vnpy" class="headerlink" title="2.Vnpy"></a>2.Vnpy</h2><p><a href="https://github.com/vnpy/vnpy_algotrading">vnpy/vnpy_algotrading: VeighNa框架的算法交易模块 (github.com)</a></p><h2 id="3-Qlib"><a href="#3-Qlib" class="headerlink" title="3.Qlib"></a>3.Qlib</h2><p><a href="https://github.com/microsoft/qlib"><a href="https://github.com/microsoft/qlib">microsoft/qlib: Qlib is an AI-oriented quantitative investment platform that aims to realize the potential, empower research, and create value using AI technologies in quantitative investment, from exploring ideas to implementing productions. Qlib supports diverse machine learning modeling paradigms. including supervised learning, market dynamics modeling, and RL. (github.com)</a></a></p><h1 id="二、Python库"><a href="#二、Python库" class="headerlink" title="二、Python库"></a>二、Python库</h1><h2 id="1-基于机器学习的凸优化库"><a href="#1-基于机器学习的凸优化库" class="headerlink" title="1.基于机器学习的凸优化库"></a>1.基于机器学习的凸优化库</h2><p><a href="https://github.com/cvxgrp/cvxpylayers">cvxgrp/cvxpylayers: Differentiable convex optimization layers (github.com)</a></p><p>三、机器学习</p><h2 id="1-Qlib"><a href="#1-Qlib" class="headerlink" title="1.Qlib"></a>1.Qlib</h2><p><a href="https://github.com/microsoft/qlib"><a href="https://github.com/microsoft/qlib">microsoft/qlib: Qlib is an AI-oriented quantitative investment platform that aims to realize the potential, empower research, and create value using AI technologies in quantitative investment, from exploring ideas to implementing productions. Qlib supports diverse machine learning modeling paradigms. including supervised learning, market dynamics modeling, and RL. (github.com)</a></a></p><h2 id="2-深度学习"><a href="#2-深度学习" class="headerlink" title="2.深度学习"></a>2.深度学习</h2><p><a href="https://github.com/d2l-ai/d2l-zh">d2l-ai/d2l-zh: 《动手学深度学习》：面向中文读者、能运行、可讨论。中英文版被70多个国家的500多所大学用于教学。 (github.com)</a></p><h2 id="3-AAAMLP"><a href="#3-AAAMLP" class="headerlink" title="3.AAAMLP"></a>3.AAAMLP</h2><p><a href="https://ytzfhqs.github.io/AAAMLP-CN/">https://ytzfhqs.github.io/AAAMLP-CN/</a></p><p><a href="https://github.com/abhishekkrthakur/approachingalmost/tree/master">https://github.com/abhishekkrthakur/approachingalmost/tree/master</a></p>]]></content>
+    <content type="html"><![CDATA[<p>用于记录我找到的好的学习资源，以便厘清学习的优先度</p><h2 id="一量化平台框架">一、量化平台&amp;框架</h2><h3 id="backtrader">1.BackTrader</h3><p><a href="https://github.com/QuantWorld2022/backtrader">QuantWorld2022/backtrader(github.com)</a></p><h3 id="vnpy">2.Vnpy</h3><p><a href="https://github.com/vnpy/vnpy_algotrading">vnpy/vnpy_algotrading:VeighNa框架的算法交易模块 (github.com)</a></p><h3 id="qlib">3.Qlib</h3><p><a href="https://github.com/microsoft/qlib">[microsoft/qlib: Qlib isan AI-oriented quantitative investment platform that aims to realize thepotential, empower research, and create value using AI technologies inquantitative investment, from exploring ideas to implementingproductions. Qlib supports diverse machine learning modeling paradigms.including supervised learning, market dynamics modeling, and RL.(github.com)](https://github.com/microsoft/qlib)</a></p><h2 id="二python库">二、Python库</h2><h3 id="基于机器学习的凸优化库">1.基于机器学习的凸优化库</h3><p><a href="https://github.com/cvxgrp/cvxpylayers">cvxgrp/cvxpylayers:Differentiable convex optimization layers (github.com)</a></p><h2 id="三机器学习">三、机器学习</h2><h3 id="qlib-1">1.Qlib</h3><p><a href="https://github.com/microsoft/qlib">[microsoft/qlib: Qlib isan AI-oriented quantitative investment platform that aims to realize thepotential, empower research, and create value using AI technologies inquantitative investment, from exploring ideas to implementingproductions. Qlib supports diverse machine learning modeling paradigms.including supervised learning, market dynamics modeling, and RL.(github.com)](https://github.com/microsoft/qlib)</a></p><h3 id="深度学习">2.深度学习</h3><p><a href="https://github.com/d2l-ai/d2l-zh">d2l-ai/d2l-zh:《动手学深度学习》：面向中文读者、能运行、可讨论。中英文版被70多个国家的500多所大学用于教学。(github.com)</a></p><h2 id="aaamlp">3.AAAMLP</h2><p>https://ytzfhqs.github.io/AAAMLP-CN/</p><p>https://github.com/abhishekkrthakur/approachingalmost/tree/master</p>]]></content>
     
     
       
       
     <summary type="html">&lt;p&gt;用于记录我找到的好的学习资源，以便厘清学习的优先度&lt;/p&gt;
-&lt;h2 id=&quot;一、量化平台-amp-框架&quot;&gt;&lt;a href=&quot;#一、量化平台-amp-框架&quot; class=&quot;headerlink&quot; title=&quot;一、量化平台&amp;amp;框架&quot;&gt;&lt;/a&gt;一、量化平台&amp;amp;框架&lt;</summary>
+&lt;h2 id=&quot;一量化平台框架&quot;&gt;一、量化平台&amp;amp;框架&lt;/h2&gt;
+&lt;h3 id=&quot;backtrader&quot;&gt;1.BackTrader&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com</summary>
       
     
     
