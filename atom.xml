@@ -6,7 +6,7 @@
   <link href="https://nobodyyj.github.io/atom.xml" rel="self"/>
   
   <link href="https://nobodyyj.github.io/"/>
-  <updated>2023-12-21T03:04:50.245Z</updated>
+  <updated>2023-12-21T08:40:07.647Z</updated>
   <id>https://nobodyyj.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>2023.12.21随笔</title>
+    <link href="https://nobodyyj.github.io/post/1738571f.html"/>
+    <id>https://nobodyyj.github.io/post/1738571f.html</id>
+    <published>2023-12-21T08:28:32.000Z</published>
+    <updated>2023-12-21T08:40:07.647Z</updated>
+    
+    <content type="html"><![CDATA[<p>​最近这半个月一边学习机器学习，一边学习资产定价理论，虽对这两方向的理解与感悟都有了大幅的提升，但是对这两个领域的交叉与结合的意义及原因，却感觉越学越迷糊。因此决定写下这篇文章，以便带着问题继续学习这两门学科。​同时也会附上我在阅读<em>Machine Learning in AssetPricing</em>的疑问。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;​
+最近这半个月一边学习机器学习，一边学习资产定价理论，虽对这两方向的理解与感悟都有了大幅的提升，但是对这两个领域的交叉与结合的意义及原因，却感觉越学越迷糊。因此决定写下这篇文章，以便带着问题继续学习这两门学科。
+​同时也会附上我在阅读&lt;em&gt;Machine Learn</summary>
+      
+    
+    
+    
+    
+    <category term="学习" scheme="https://nobodyyj.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+    <category term="机器学习" scheme="https://nobodyyj.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
   
   <entry>
     <title>学习资源整理</title>
