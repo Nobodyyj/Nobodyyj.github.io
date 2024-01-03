@@ -112,3 +112,5 @@ npm install hexo-deployer-git --save
 执行`hexo d -g`指令（在此之前，有时可能需要执行`hexo clean`），完成后就会发现，最新改动已经更新到`master`分支了，两个分支互不干扰！
 
 **注意**：每次**换电脑进行博客更新**时，不管上次在其他电脑有没有更新（就怕更新之后忘了），最好先`git pull`获取`xxx`分支的最新版本，之后再进行编辑和提交。
+
+[git WorkFlow](https://codeantenna.com/a/YRLydjyz7L)
