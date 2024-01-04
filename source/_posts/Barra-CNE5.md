@@ -1,9 +1,10 @@
 ---
 title: Barra CNE5
-date: 2024-01-03 09:50:48
 tags:
-- 量化
-- 学习
+  - 量化
+  - 学习
+abbrlink: 8d2ea662
+date: 2024-01-03 09:50:48
 ---
 # Barra CNE5
 ## 1.前言
