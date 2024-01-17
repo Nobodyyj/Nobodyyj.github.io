@@ -50,4 +50,4 @@ $\begin{aligned} & {\left[\begin{array}{c}r_1-r_f \\ r_2-r_f \\ \vdots \\ r_N-r_
 ## 参考文献
 
 1.[正确理解 Barra 的纯因子模型](https://zhuanlan.zhihu.com/p/38280638)
-2.
+2.test
