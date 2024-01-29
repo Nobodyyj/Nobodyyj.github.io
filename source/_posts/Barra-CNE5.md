@@ -23,9 +23,9 @@ $\begin{aligned} & {\left[\begin{array}{c}r_1-r_f \\ r_2-r_f \\ \vdots \\ r_N-r_
 
 ## 3.Barra10因子
 
-![image-20240129224012714](./Barra-CNE5.assets/image-20240129224012714.png)
+![image-20240129224012714](./Barra-CNE5/image-20240129224012714.png)
 
-![image-20240129224028275](./Barra-CNE5.assets/image-20240129224028275.png)
+![image-20240129224028275](./Barra-CNE5/image-20240129224028275.png)
 
 # 4.Barra10因子的作用
 
