@@ -48,7 +48,7 @@
     <link href="https://nobodyyj.github.io/post/8d2ea662.html"/>
     <id>https://nobodyyj.github.io/post/8d2ea662.html</id>
     <published>2024-01-03T01:50:48.000Z</published>
-    <updated>2024-01-29T14:46:38.528Z</updated>
+    <updated>2024-01-29T14:56:52.664Z</updated>
     
     <content type="html"><![CDATA[<h1 id="barra-cne5">Barra CNE5</h1><h2 id="前言">1.前言</h2><p>本文旨在记录自己在学习和使用Barra CNE5模型的过程，方便未来回忆。</p><h2 id="cne5模型简介">2.CNE5模型简介</h2><p>​ CNE5 是 Barra的最新一代面向中国股票市场的多因子模型。<strong>该模型考虑了一个国家因子、多个行业因子以及多个风格因子。</strong>假设市场中共有N 支股票，P 个行业，以及 Q个风格因子。在任意给定时间点，该模型使用因子暴露和个股收益率构建<strong>截面回归（cross-sectionalregression）</strong>如下：</p><p><span class="math inline">\(\begin{aligned} &amp;{\left[\begin{array}{c}r_1-r_f \\ r_2-r_f \\ \vdots \\r_N-r_f\end{array}\right]=\left[\begin{array}{c}1 \\ 1 \\1\end{array}\right] f_C+\left[\begin{array}{c}X_1^{I_1} \\ X_2^{I_1} \\\vdots \\ X_N^{I_1}\end{array}\right]f_{I_1}+\cdots+\left[\begin{array}{c}X_1^{I_P} \\ X_2^{I_P} \\ \vdots \\X_N^{I_P}\end{array}\right] f_{I_P}+\left[\begin{array}{c}X_1^{S_1} \\X_2^{S_1} \\ \vdots \\ X_1^{S_1} \\ X_2^{S_Q} \\ \vdots \\X_N^{S_Q}\end{array}\right] f_{S_Q}+\left[\begin{array}{c}u_1 \\ u_2 \\\vdots \\ u_N\end{array}\right]}\end{aligned}\)</span></p><p>​ 其中 <span class="math inline">\(r_n\)</span> 是第 <span class="math inline">\(\mathrm{n}\)</span> 支股票的收益率， <span class="math inline">\(r_f\)</span> 是无风险收益率。 <span class="math inline">\(X_n^{I_p}\)</span> 是股票 <span class="math inline">\(\mathrm{n}\)</span> 在行业 <span class="math inline">\(I_p\)</span>的暴露，如果假设一个公司只能属于一个行业，那么 <span class="math inline">\(X_n^{I_p}\)</span> 的取值为 0(代表该股票不属于这个行业) 或者 1 (代表该股票属于这个行业)。 <span class="math inline">\(X_n^{S_q}\)</span> 是股票 <span class="math inline">\(\mathrm{n}\)</span> 在风格因子 <span class="math inline">\(S_q\)</span> 的暴露，它的取值经过了某种标准化（标准化的方法会在下文说明）。 <span class="math inline">\(u_n\)</span>为股票 <span class="math inline">\(\mathrm{n}\)</span>的超额收益中无法被因子解释的部分，因此也被称为该股票的特异性收益。 <span class="math inline">\(f_C\)</span>为国家因子的因子收益率（所有股票在国家因子上的暴露都是1）； <span class="math inline">\(f_{I_p}\)</span> 为行业 <span class="math inline">\(I_p\)</span> 因子的因子收益率; <span class="math inline">\(f_{S_q}\)</span> 为风格因子 <span class="math inline">\(S_q\)</span> 的因子收益率。</p><p>​ 对于给定某一期截面数据（记为 <span class="math inline">\(\mathrm{T}\)</span> 期），在截面回归时，Barra采用期初的因子暴露取值（等价于 <span class="math inline">\(\mathrm{T}\)</span> - 1 期期末的因子暴露取值)和股票在 T 期内的收益率进行截面回归。在 USE4模型中，因子收益率是日频的，因此截面回归也应该是日频的，所以按照上述说明，在<span class="math inline">\(T-1\)</span> 日结束后更新因子的暴露，并利用T 日的股票收益率和因子暴露做截面回归。以下说明来自 Barra Risk ModelHandbook。</p><h2 id="barra10因子">3.Barra10因子</h2><figure><img src="/post/8d2ea662/image-20240129224012714.png" alt="image-20240129224012714"><figcaption aria-hidden="true">image-20240129224012714</figcaption></figure><figure><img src="/post/8d2ea662/image-20240129224028275.png" alt="image-20240129224028275"><figcaption aria-hidden="true">image-20240129224028275</figcaption></figure><h1 id="barra10因子的作用">4.Barra10因子的作用</h1><p>​在得到因子之后，可以从时序上，观察因子值、pnl时序上与10因子的相关系数，来反应该因子在不同风格上的暴露。​此外，还可以考虑加入20DR观察该因子对股价反转因子的暴露。</p><h1 id="风格因子">5.风格？因子？</h1><p>​什么是风格因子，什么是异象因子呢？换言之，我们能否自行选择合适的风格因子来检验某一因子在该方面的风险暴露程度，这个问题值得继续研究。之前在刷研报的时候，似乎也有研究员对size市值因子到底是算风格还是一个市场异象进行过讨论，但是笔者写到这里的时候不记得了（2024-1-2922:46:26），将带着这个问题继续学习~</p><h2 id="参考文献">参考文献</h2><p>1.<a href="https://zhuanlan.zhihu.com/p/38280638">正确理解 Barra的纯因子模型</a></p>]]></content>
     
@@ -170,27 +170,6 @@
   </entry>
   
   <entry>
-    <title>搭建自用中低频回测系统</title>
-    <link href="https://nobodyyj.github.io/post/d071063d.html"/>
-    <id>https://nobodyyj.github.io/post/d071063d.html</id>
-    <published>2023-11-26T02:40:46.000Z</published>
-    <updated>2023-11-28T13:19:05.115Z</updated>
-    
-    <content type="html"><![CDATA[]]></content>
-    
-    
-      
-      
-    <summary type="html">
-</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
     <title>实习思考</title>
     <link href="https://nobodyyj.github.io/post/e850ef3b.html"/>
     <id>https://nobodyyj.github.io/post/e850ef3b.html</id>
@@ -236,29 +215,6 @@
     
     
     <category term="实习" scheme="https://nobodyyj.github.io/tags/%E5%AE%9E%E4%B9%A0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>学习面向对象编程</title>
-    <link href="https://nobodyyj.github.io/post/f268ed81.html"/>
-    <id>https://nobodyyj.github.io/post/f268ed81.html</id>
-    <published>2023-10-10T03:14:04.000Z</published>
-    <updated>2023-10-23T08:05:56.364Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="使用class创建类的几个特殊函数">使用Class()创建类的几个特殊函数</h2><h3 id="new__"><code>__new__</code></h3><h3 id="init__"><code>__init__</code></h3><h3 id="call__">3.<code>__call__</code></h3><p>定义：<code>__call__</code>是创建实例对象的运算符。**元类的__call__方法可以用来控制该元类所创建的类去创建实例对象的过程**</p><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># example 1</span><span class="token keyword">class</span> <span class="token class-name">MyClass</span><span class="token punctuation">:</span>    <span class="token keyword">def</span> <span class="token function">__call__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> num<span class="token punctuation">)</span><span class="token punctuation">:</span>        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f'[</span><span class="token interpolation"><span class="token punctuation">&#123;</span>num<span class="token punctuation">&#125;</span></span><span class="token string">] </span><span class="token interpolation"><span class="token punctuation">&#123;</span>self<span class="token punctuation">&#125;</span></span><span class="token string">'</span></span><span class="token punctuation">)</span>myobj <span class="token operator">=</span> MyClass<span class="token punctuation">(</span><span class="token punctuation">)</span>myobj<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>myobj<span class="token punctuation">.</span>__call__<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><code>MyClass( )</code>就相当于<code>MyClass.__call__( )</code>，就会按照定义把调用者类MyClass打印出来</p><p>但是Myclass在定义的时候没有return值，所以创建的实例为空。</p><hr><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Person</span><span class="token punctuation">:</span>    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> firstname<span class="token punctuation">,</span> lastname<span class="token punctuation">)</span><span class="token punctuation">:</span>        self<span class="token punctuation">.</span>firstname <span class="token operator">=</span> firstname        self<span class="token punctuation">.</span>lastname <span class="token operator">=</span> lastname    <span class="token decorator annotation punctuation">@classmethod</span>    <span class="token keyword">def</span> <span class="token function">from_fullname</span><span class="token punctuation">(</span>cls<span class="token punctuation">,</span> fullname<span class="token punctuation">)</span><span class="token punctuation">:</span>        cls<span class="token punctuation">.</span>firstname<span class="token punctuation">,</span> cls<span class="token punctuation">.</span>lastname <span class="token operator">=</span> fullname<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">' '</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>此处的<code>cls</code>和<code>self</code>的用法规定（<strong>Functionand method arguments</strong>）:</p><p>Always use <code>self</code> for the first argument to instancemethods.</p><p>Always use <code>cls</code> for the first argument to classmethods.</p><hr>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;使用class创建类的几个特殊函数&quot;&gt;使用Class()创建类的几个特殊函数&lt;/h2&gt;
-&lt;h3 id=&quot;new__&quot;&gt;&lt;code&gt;__new__&lt;/code&gt;&lt;/h3&gt;
-&lt;h3 id=&quot;init__&quot;&gt;&lt;code&gt;__init__&lt;/code&gt;&lt;/h3&gt;
-&lt;</summary>
-      
-    
-    
-    
     
   </entry>
   

@@ -126,19 +126,6 @@
     
     
     <entry>
-      <title>搭建自用中低频回测系统</title>
-      <link href="/post/d071063d.html"/>
-      <url>/post/d071063d.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>实习思考</title>
       <link href="/post/e850ef3b.html"/>
       <url>/post/e850ef3b.html</url>
@@ -171,19 +158,6 @@
             <tag> 实习 </tag>
             
         </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>学习面向对象编程</title>
-      <link href="/post/f268ed81.html"/>
-      <url>/post/f268ed81.html</url>
-      
-        <content type="html"><![CDATA[<h2 id="使用class创建类的几个特殊函数">使用Class()创建类的几个特殊函数</h2><h3 id="new__"><code>__new__</code></h3><h3 id="init__"><code>__init__</code></h3><h3 id="call__">3.<code>__call__</code></h3><p>定义：<code>__call__</code>是创建实例对象的运算符。**元类的__call__方法可以用来控制该元类所创建的类去创建实例对象的过程**</p><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># example 1</span><span class="token keyword">class</span> <span class="token class-name">MyClass</span><span class="token punctuation">:</span>    <span class="token keyword">def</span> <span class="token function">__call__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> num<span class="token punctuation">)</span><span class="token punctuation">:</span>        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f'[</span><span class="token interpolation"><span class="token punctuation">&#123;</span>num<span class="token punctuation">&#125;</span></span><span class="token string">] </span><span class="token interpolation"><span class="token punctuation">&#123;</span>self<span class="token punctuation">&#125;</span></span><span class="token string">'</span></span><span class="token punctuation">)</span>myobj <span class="token operator">=</span> MyClass<span class="token punctuation">(</span><span class="token punctuation">)</span>myobj<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>myobj<span class="token punctuation">.</span>__call__<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><code>MyClass( )</code>就相当于<code>MyClass.__call__( )</code>，就会按照定义把调用者类MyClass打印出来</p><p>但是Myclass在定义的时候没有return值，所以创建的实例为空。</p><hr><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Person</span><span class="token punctuation">:</span>    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> firstname<span class="token punctuation">,</span> lastname<span class="token punctuation">)</span><span class="token punctuation">:</span>        self<span class="token punctuation">.</span>firstname <span class="token operator">=</span> firstname        self<span class="token punctuation">.</span>lastname <span class="token operator">=</span> lastname    <span class="token decorator annotation punctuation">@classmethod</span>    <span class="token keyword">def</span> <span class="token function">from_fullname</span><span class="token punctuation">(</span>cls<span class="token punctuation">,</span> fullname<span class="token punctuation">)</span><span class="token punctuation">:</span>        cls<span class="token punctuation">.</span>firstname<span class="token punctuation">,</span> cls<span class="token punctuation">.</span>lastname <span class="token operator">=</span> fullname<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">' '</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>此处的<code>cls</code>和<code>self</code>的用法规定（<strong>Functionand method arguments</strong>）:</p><p>Always use <code>self</code> for the first argument to instancemethods.</p><p>Always use <code>cls</code> for the first argument to classmethods.</p><hr>]]></content>
-      
-      
       
     </entry>
     
