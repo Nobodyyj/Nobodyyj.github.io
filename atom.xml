@@ -6,7 +6,7 @@
   <link href="https://nobodyyj.github.io/atom.xml" rel="self"/>
   
   <link href="https://nobodyyj.github.io/"/>
-  <updated>2024-01-04T16:04:27.289Z</updated>
+  <updated>2024-02-18T02:43:07.286Z</updated>
   <id>https://nobodyyj.github.io/</id>
   
   <author>
@@ -15,6 +15,58 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>大四下学期to-do list</title>
+    <link href="https://nobodyyj.github.io/post/3331babe.html"/>
+    <id>https://nobodyyj.github.io/post/3331babe.html</id>
+    <published>2024-02-18T02:38:39.000Z</published>
+    <updated>2024-02-18T02:43:07.286Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="大四下-to-do-list">大四下 to-do list</h1><ul class="task-list"><li><label><input type="checkbox">找到一份日薪200+的方向合适的量化实习</label></li><li><label><input type="checkbox">出去旅游</label></li><li><label><input type="checkbox">参加一次kaggle比赛（<a href="https://www.kaggle.com/competitions/home-credit-credit-risk-model-stability">信贷风险模型</a>)</label></li><li><label><input type="checkbox">完成个人回测系统的搭建</label></li><li><label><input type="checkbox">crypto实盘</label></li></ul><hr><p>2024-2-18</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;大四下-to-do-list&quot;&gt;大四下 to-do list&lt;/h1&gt;
+&lt;ul class=&quot;task-list&quot;&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&quot;checkbox&quot;&gt;找到一份日薪200+的方向合适的量化实习&lt;/label&gt;&lt;/li&gt;
+&lt;l</summary>
+      
+    
+    
+    
+    
+    <category term="to-do list" scheme="https://nobodyyj.github.io/tags/to-do-list/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>从零开始在vscode上配置C++运行环境</title>
+    <link href="https://nobodyyj.github.io/post/d38d0dd6.html"/>
+    <id>https://nobodyyj.github.io/post/d38d0dd6.html</id>
+    <published>2024-02-06T11:55:40.000Z</published>
+    <updated>2024-02-18T02:37:49.814Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="从零开始在vscode上配置c运行环境">从零开始在vscode上配置C++运行环境</h1><p>​本文用于记录我在配置C++时遇到的坑。之前在配置的时候是花钱找tb帮忙做的，这次打算记录下来这个过程，以便后续复现。</p><h2 id="安装mingw编译器">1.安装MinGW编译器</h2><p>​ 需要从<a href="https://sourceforge.net/projects/mingw-w64/files/mingw-w64/mingw-w64-release/">SourceForge.net</a>处下载MinGW编译器.</p><h3 id="选择合适的版本">1.1 选择合适的版本</h3><figure><img src="/post/d38d0dd6/image-20240206200640071.png" alt="image-20240206200640071"><figcaption aria-hidden="true">image-20240206200640071</figcaption></figure><figure><img src="/post/d38d0dd6/v2-2d0276533469f23e148dbe7b8e688b85_720w.png" alt="img"><figcaption aria-hidden="true">img</figcaption></figure><h3 id="配置系统环境">1.2 配置系统环境</h3><p>将（比如我的是D:_64-8.1.0-release-posix-seh-rt_v6-rev0）添加入电脑系统环境<img src="https://pic1.zhimg.com/80/v2-aa4899ab623657407ad5dca167a5bf80_720w.webp" alt="img"></p><figure><img src="/post/d38d0dd6/image-20240206201139096.png" alt="image-20240206201139096"><figcaption aria-hidden="true">image-20240206201139096</figcaption></figure><h3 id="验证是否成功安装">1.3 验证是否成功安装</h3><p>打开cmd，输入<code>gcc -v</code></p><figure><img src="/post/d38d0dd6/image-20240206201212569.png" alt="image-20240206201212569"><figcaption aria-hidden="true">image-20240206201212569</figcaption></figure><p>出现上述内容说明安装成功</p><h2 id="在vscode中安装cc插件">2.在vscode中安装C/C++插件</h2><figure><img src="/post/d38d0dd6/image-20240206200423060.png" alt="image-20240206200423060"><figcaption aria-hidden="true">image-20240206200423060</figcaption></figure><h2 id="配置cc环境">3.配置C/C++环境</h2><figure><img src="/post/d38d0dd6/v2-0b4821eecf84239ddd2cb1770e6520c3_720w.png" alt="img"><figcaption aria-hidden="true">img</figcaption></figure><p>可以先建立 .vscode文件夹</p><h3 id="配置编译器">3.1 配置编译器</h3><p><strong>（在.vscode文件夹含有c_cpp_properties.json文件）</strong></p><p>首先按快捷键Ctrl+Shift+P调出命令面板，输入C/C++，选择“EditConfigurations(UI)”进入配置。</p><p>接着这里配置两个选项： - 编译器路径：</p><pre class="line-numbers language-text" data-language="text"><code class="language-text">D:/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/bin/g++.exe<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>这里的路径根据大家自己安装的Mingw编译器位置和配置的环境变量位置所决定。</p><figure><img src="/post/d38d0dd6/v2-6c92ebccb5ee908a85aaf00e6b266c87_720w.webp" alt="img"><figcaption aria-hidden="true">img</figcaption></figure><p>第一步</p><figure><img src="/post/d38d0dd6/v2-30f3dbb1578b72af40fb646ec57c08fb_720w.webp" alt="img"><figcaption aria-hidden="true">img</figcaption></figure><p>第二步</p><figure><img src="/post/d38d0dd6/v2-da4e9d35e8e9dadb8b1ed1a64f7a9f90_720w.webp" alt="img"><figcaption aria-hidden="true">img</figcaption></figure><p>第三步</p><p>配置完成后，此时在侧边栏可以发现多了一个.vscode文件夹，并且里面有一个c_cpp_properties.json文件，内容如下，说明上述配置成功。现在可以通过**Ctrl+<code>快捷键**打开内置终端并进行编译运行了。（ESC下边的</code>）</p><p><strong>c_cpp_properties.json</strong></p><pre class="line-numbers language-jsonld" data-language="jsonld"><code class="language-jsonld">&#123;    &quot;configurations&quot;: [        &#123;            &quot;name&quot;: &quot;Win32&quot;,            &quot;includePath&quot;: [                &quot;$&#123;workspaceFolder&#125;&#x2F;**&quot;            ],            &quot;defines&quot;: [                &quot;_DEBUG&quot;,                &quot;UNICODE&quot;,                &quot;_UNICODE&quot;            ],            &quot;windowsSdkVersion&quot;: &quot;10.0.17763.0&quot;,            &quot;compilerPath&quot;: &quot;C:\\Program Files\\mingw64\\bin\\gcc.exe&quot;,            &quot;cStandard&quot;: &quot;c17&quot;,            &quot;cppStandard&quot;: &quot;c++17&quot;,            &quot;intelliSenseMode&quot;: &quot;gcc-x64&quot;        &#125;    ],    &quot;version&quot;: 4&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h3 id="配置构建任务">3.2 配置构建任务</h3><p><strong>（在.vscode文件夹中创建一个tasks.json文件）</strong></p><p>该任务将调用g++编译器基于源代码创建可执行文件。按快捷键Ctrl+Shift+P调出命令面板，输入tasks，选择“Tasks:ConfigureDefault Build Task”：</p><figure><img src="/post/d38d0dd6/v2-4c31d3e823dc3e51e44886380484fce2_720w.png" alt="img"><figcaption aria-hidden="true">img</figcaption></figure><p>第一步哟</p><p>再选择“C/C++: g++.exe build active file”：</p><figure><img src="/post/d38d0dd6/v2-3836bdbba135f75567e4f0b72b57e5a2_720w.png" alt="img"><figcaption aria-hidden="true">img</figcaption></figure><p>第二步呀</p><p>此时会出现一个名为tasks.json的配置文件，内容如下：</p><pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>    <span class="token comment">// See https://go.microsoft.com/fwlink/?LinkId=733558 </span>    <span class="token comment">// for the documentation about the tasks.json format</span>    <span class="token property">"tasks"</span><span class="token operator">:</span> <span class="token punctuation">[</span>        <span class="token punctuation">&#123;</span><span class="token comment">//构建配置项</span>            <span class="token property">"type"</span><span class="token operator">:</span><span class="token string">"shell"</span><span class="token punctuation">,</span><span class="token comment">//任务类型,Vscode将预定义变量转义解析后直接传给command;shell->先打开shell再输入命令,因此args会经过shell再次解析</span>            <span class="token property">"label"</span><span class="token operator">:</span> <span class="token string">" "</span>g++.exe build active file<span class="token string">""</span><span class="token punctuation">,</span><span class="token comment">//任务名称</span>            <span class="token property">"command"</span><span class="token operator">:</span> <span class="token string">"C:\\Program Files\\mingw64\\bin\\gcc.exe"</span><span class="token punctuation">,</span><span class="token comment">//记得修改本地编译器路径</span>            <span class="token property">"args"</span><span class="token operator">:</span> <span class="token punctuation">[</span> <span class="token comment">//包含传给gcc命令的参数,用于实现特定功能</span>                <span class="token string">"-g"</span><span class="token punctuation">,</span> <span class="token comment">//生成和调试有关的信息</span>                <span class="token string">"$&#123;file&#125;"</span><span class="token punctuation">,</span> <span class="token comment">//指定编译文件为当前文件</span>                <span class="token string">"-o"</span><span class="token punctuation">,</span><span class="token comment">//指定输出文件的路径和名称</span>                <span class="token comment">//"$&#123;fileDirname&#125;\\$&#123;fileBasenameNoExtension&#125;.exe"</span>                <span class="token string">"$&#123;workspaceFolder&#125;\\build\\$&#123;fileBasenameNoExtension&#125;.exe"</span><span class="token comment">//修改.exe文件生成位置</span>            <span class="token punctuation">]</span><span class="token punctuation">,</span>            <span class="token property">"options"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>                <span class="token comment">//"cwd": "$&#123;fileDirname&#125;"</span>                <span class="token property">"cwd"</span><span class="token operator">:</span> <span class="token string">"C:\\Program Files\\mingw64\\bin"</span>            <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>            <span class="token property">"problemMatcher"</span><span class="token operator">:</span> <span class="token punctuation">[</span>                <span class="token string">"$gcc"</span>            <span class="token punctuation">]</span><span class="token punctuation">,</span>            <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span><span class="token comment">//包含很多task,归为group</span>                <span class="token property">"kind"</span><span class="token operator">:</span> <span class="token string">"build"</span><span class="token punctuation">,</span><span class="token comment">//表名该组任务类型是构建</span>                <span class="token property">"isDefault"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token comment">//表明此任务为此组任务中的默认任务</span>            <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>            <span class="token property">"detail"</span><span class="token operator">:</span> <span class="token string">"调试器生成的任务。"</span>        <span class="token punctuation">&#125;</span>    <span class="token punctuation">]</span><span class="token punctuation">,</span>    <span class="token property">"version"</span><span class="token operator">:</span> <span class="token string">"2.0.0"</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><figure><img src="/post/d38d0dd6/v2-113ac7497af63217711d42d1b8ef1cda_720w.webp" alt="img"><figcaption aria-hidden="true">img</figcaption></figure><p>可以参考一下</p><p>（本部分参考：<a href="https://zhuanlan.zhihu.com/p/545908287">【详细版】VsCode搭建C++环境- 知乎 (zhihu.com)</a>）</p><hr><p><strong>此时，已经可以正常运行和调试.cpp的文件了！</strong></p><figure><img src="/post/d38d0dd6/image-20240206203324701.png" alt="image-20240206203324701"><figcaption aria-hidden="true">image-20240206203324701</figcaption></figure><p>但是此时编译好的.exe后缀文件会保存在原代码的位置，看起来非常的丑！</p><figure><img src="/post/d38d0dd6/image-20240206203445574.png" alt="image-20240206203445574"><figcaption aria-hidden="true">image-20240206203445574</figcaption></figure><p>我们希望把.exe文件放到bin文件夹中</p><h3 id="设置输出编译后文件至某一文件夹">3.3设置输出编译后文件至某一文件夹</h3><figure><img src="/post/d38d0dd6/image-20240206203843473.png" alt="image-20240206203843473"><figcaption aria-hidden="true">image-20240206203843473</figcaption></figure><p>把这一行代码的输出改为如图所示。</p><figure><img src="/post/d38d0dd6/image-20240206203904210.png" alt="image-20240206203904210"><figcaption aria-hidden="true">image-20240206203904210</figcaption></figure><p><strong>成功！</strong></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;从零开始在vscode上配置c运行环境&quot;&gt;从零开始在vscode上配置C++运行环境&lt;/h1&gt;
+&lt;p&gt;​
+本文用于记录我在配置C++时遇到的坑。之前在配置的时候是花钱找tb帮忙做的，这次打算记录下来这个过程，以便后续复现。&lt;/p&gt;
+&lt;h2 id=&quot;安装min</summary>
+      
+    
+    
+    
+    
+    <category term="C++" scheme="https://nobodyyj.github.io/tags/C/"/>
+    
+    <category term="踩坑记录" scheme="https://nobodyyj.github.io/tags/%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/"/>
+    
+  </entry>
   
   <entry>
     <title>C++学习</title>
