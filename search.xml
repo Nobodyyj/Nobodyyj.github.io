@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>统计学习学习记录</title>
+      <link href="/post/e5e13074.html"/>
+      <url>/post/e5e13074.html</url>
+      
+        <content type="html"><![CDATA[<p>作为非科班出身的金数人，在学习机器学习模型时我发现自对一些最基础、最本质的概念理解不够深入，所以打算写一篇blog，记录一下自己在学习的时候遇到的零零散散的问题。</p><h2 id="极大似然估计mle和损失函数的关系">1.极大似然估计(MLE)和损失函数的关系</h2><ol type="1"><li>若变量服从高斯分布，MLE的结果是OLS</li><li>若变量服从伯努利分布，MLE的结果是logistich回归</li><li>若变量服从多项式分布，MLE的结果是softmax</li></ol><h2 id="当我们对损失函数正则化时我们在做什么">2.当我们对损失函数正则化时，我们在做什么？</h2>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 机器学习 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>大四下学期to-do list</title>
       <link href="/post/3331babe.html"/>
       <url>/post/3331babe.html</url>

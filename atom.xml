@@ -6,7 +6,7 @@
   <link href="https://nobodyyj.github.io/atom.xml" rel="self"/>
   
   <link href="https://nobodyyj.github.io/"/>
-  <updated>2024-02-18T02:46:24.753Z</updated>
+  <updated>2024-02-21T11:46:40.358Z</updated>
   <id>https://nobodyyj.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>统计学习学习记录</title>
+    <link href="https://nobodyyj.github.io/post/e5e13074.html"/>
+    <id>https://nobodyyj.github.io/post/e5e13074.html</id>
+    <published>2024-02-21T11:30:58.000Z</published>
+    <updated>2024-02-21T11:46:40.358Z</updated>
+    
+    <content type="html"><![CDATA[<p>作为非科班出身的金数人，在学习机器学习模型时我发现自对一些最基础、最本质的概念理解不够深入，所以打算写一篇blog，记录一下自己在学习的时候遇到的零零散散的问题。</p><h2 id="极大似然估计mle和损失函数的关系">1.极大似然估计(MLE)和损失函数的关系</h2><ol type="1"><li>若变量服从高斯分布，MLE的结果是OLS</li><li>若变量服从伯努利分布，MLE的结果是logistich回归</li><li>若变量服从多项式分布，MLE的结果是softmax</li></ol><h2 id="当我们对损失函数正则化时我们在做什么">2.当我们对损失函数正则化时，我们在做什么？</h2>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;作为非科班出身的金数人，在学习机器学习模型时我发现自对一些最基础、最本质的概念理解不够深入，所以打算写一篇blog，记录一下自己在学习的时候遇到的零零散散的问题。&lt;/p&gt;
+&lt;h2 id=&quot;极大似然估计mle和损失函数的关系&quot;&gt;1.极大似然估计(MLE)和损失函数的关系&lt;/</summary>
+      
+    
+    
+    
+    
+    <category term="机器学习" scheme="https://nobodyyj.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
   
   <entry>
     <title>大四下学期to-do list</title>
