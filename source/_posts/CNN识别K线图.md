@@ -1,16 +1,17 @@
 ---
 title: CNN识别K线图
-date: 2024-04-23 16:22:58
 tags:
-- CNN
-- 机器学习
+  - CNN
+  - 机器学习
+abbrlink: 9f0434dc
+date: 2024-04-23 16:22:58
 ---
 
 # 1.AlexNet识别K线
 
 ## 模型的结构
 
-![image-20240423161730775](./CNN识别K线图/image-20240423161730775.png)
+![](./CNN识别K线图/image-20240423161730775.png)
 
 
 
@@ -74,7 +75,7 @@ net = nn.Sequential(
 
 > We use daily stock data from CRSP for all firms listed on NYSE, AMEX, and NASDAQ. Our sample runs from 1993–2019 based on the fact that daily opening, high, and low prices first become available in June 1992. Our price trend analysis focuses on returns adjusted for corporate actions by using returnsto construct a price series. In each image, we normalize the first day closing price to one, and construct each subsequent daily close from returns (RETt) according to
 >
-> ![image-20240423141555228](./CNN识别K线图/image-20240423141555228.png)
+> ![](./CNN识别K线图/image-20240423141555228.png)
 >
 > Each day’s opening/high/low price levels are scaled in proportion to that day’s closing price level. 
 >
@@ -92,7 +93,7 @@ net = nn.Sequential(
 
 ### Loss Function
 
-![image-20240423142055300](./CNN识别K线图.assets/image-20240423142055300.png)
+![](./CNN识别K线图.assets/image-20240423142055300.png)
 
 ### Hyperparameters
 
@@ -113,9 +114,9 @@ net = nn.Sequential(
 
 ### 2.模式的structure可以按照alexnet or 安宁宁的
 
-|                           AlexNet                            |                            安宁宁                            |
-| :----------------------------------------------------------: | :----------------------------------------------------------: |
-| ![image-20240423161730775](./CNN识别K线图/image-20240423161730775.png) | ![image-20240423161801443](./CNN识别K线图/image-20240423161801443.png) |
+|                     AlexNet                     |                     安宁宁                      |
+| :---------------------------------------------: | :---------------------------------------------: |
+| ![](./CNN识别K线图/image-20240423161730775.png) | ![](./CNN识别K线图/image-20240423161801443.png) |
 
 ### 3.output
 
@@ -125,8 +126,8 @@ net = nn.Sequential(
 
 ## 原文：
 
-> ![image-20240423160948219](./CNN识别K线图.assets/image-20240423160948219.png)
+> ![](./CNN识别K线图.assets/image-20240423160948219.png)
 >
-> ![image-20240423161005878](./CNN识别K线图.assets/image-20240423161005878.png)
+> ![](./CNN识别K线图.assets/image-20240423161005878.png)
 >
-> ![image-20240423161040743](./CNN识别K线图/image-20240423161040743.png)
+> ![](./CNN识别K线图/image-20240423161040743.png)
