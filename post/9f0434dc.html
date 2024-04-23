@@ -1,0 +1,396 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>CNN识别K线图 | Huang Yujie's Blog</title><meta name="author" content="Huang Yujie,struggle_hyj@outlook.com"><meta name="copyright" content="Huang Yujie"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="1.AlexNet识别K线 模型的结构   image-20240423161730775  Code import torch from torch import nn  net &#x3D; nn.Sequential(     # 这里使用一个11*11的更大窗口来捕捉对象。     # 同时，步幅为4，以减少输出的高度和宽度。     # 另外，输出通道的数目远大于LeNet">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CNN识别K线图">
+<meta property="og:url" content="https://nobodyyj.github.io/post/9f0434dc.html">
+<meta property="og:site_name" content="Huang Yujie&#39;s Blog">
+<meta property="og:description" content="1.AlexNet识别K线 模型的结构   image-20240423161730775  Code import torch from torch import nn  net &#x3D; nn.Sequential(     # 这里使用一个11*11的更大窗口来捕捉对象。     # 同时，步幅为4，以减少输出的高度和宽度。     # 另外，输出通道的数目远大于LeNet">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://nobodyyj.github.io/img/header2.png">
+<meta property="article:published_time" content="2024-04-23T08:22:58.000Z">
+<meta property="article:modified_time" content="2024-04-23T08:29:47.818Z">
+<meta property="article:author" content="Huang Yujie">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="CNN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nobodyyj.github.io/img/header2.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://nobodyyj.github.io/post/9f0434dc.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: {"limitDay":500000,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'CNN识别K线图',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-23 16:29:47'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Huang Yujie's Blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/header2.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/tmp_bg.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Huang Yujie's Blog"><span class="site-name">Huang Yujie's Blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">CNN识别K线图</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-04-23T08:22:58.000Z" title="发表于 2024-04-23 16:22:58">2024-04-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-04-23T08:29:47.818Z" title="更新于 2024-04-23 16:29:47">2024-04-23</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="CNN识别K线图"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="alexnet识别k线">1.AlexNet识别K线</h1>
+<h2 id="模型的结构">模型的结构</h2>
+<figure>
+<img src="/post/9f0434dc/image-20240423161730775.png" alt="image-20240423161730775">
+<figcaption aria-hidden="true">image-20240423161730775</figcaption>
+</figure>
+<h2 id="code">Code</h2>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> torch
+<span class="token keyword">from</span> torch <span class="token keyword">import</span> nn
+
+net <span class="token operator">=</span> nn<span class="token punctuation">.</span>Sequential<span class="token punctuation">(</span>
+    <span class="token comment"># 这里使用一个11*11的更大窗口来捕捉对象。</span>
+    <span class="token comment"># 同时，步幅为4，以减少输出的高度和宽度。</span>
+    <span class="token comment"># 另外，输出通道的数目远大于LeNet</span>
+    nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">96</span><span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">11</span><span class="token punctuation">,</span> stride<span class="token operator">=</span><span class="token number">4</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> nn<span class="token punctuation">.</span>ReLU<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    nn<span class="token punctuation">.</span>MaxPool2d<span class="token punctuation">(</span>kernel_size<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">,</span> stride<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token comment"># 减小卷积窗口，使用填充为2来使得输入与输出的高和宽一致，且增大输出通道数</span>
+    nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span><span class="token number">96</span><span class="token punctuation">,</span> <span class="token number">256</span><span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">5</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span> nn<span class="token punctuation">.</span>ReLU<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    nn<span class="token punctuation">.</span>MaxPool2d<span class="token punctuation">(</span>kernel_size<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">,</span> stride<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token comment"># 使用三个连续的卷积层和较小的卷积窗口。</span>
+    <span class="token comment"># 除了最后的卷积层，输出通道的数量进一步增加。</span>
+    <span class="token comment"># 在前两个卷积层之后，汇聚层不用于减少输入的高度和宽度</span>
+    nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span><span class="token number">256</span><span class="token punctuation">,</span> <span class="token number">384</span><span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> nn<span class="token punctuation">.</span>ReLU<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span><span class="token number">384</span><span class="token punctuation">,</span> <span class="token number">384</span><span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> nn<span class="token punctuation">.</span>ReLU<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span><span class="token number">384</span><span class="token punctuation">,</span> <span class="token number">256</span><span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> nn<span class="token punctuation">.</span>ReLU<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    nn<span class="token punctuation">.</span>MaxPool2d<span class="token punctuation">(</span>kernel_size<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">,</span> stride<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    nn<span class="token punctuation">.</span>Flatten<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token comment"># 这里，全连接层的输出数量是LeNet中的好几倍。使用dropout层来减轻过拟合</span>
+    nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span><span class="token number">6400</span><span class="token punctuation">,</span> <span class="token number">4096</span><span class="token punctuation">)</span><span class="token punctuation">,</span> nn<span class="token punctuation">.</span>ReLU<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    nn<span class="token punctuation">.</span>Dropout<span class="token punctuation">(</span>p<span class="token operator">=</span><span class="token number">0.5</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span><span class="token number">4096</span><span class="token punctuation">,</span> <span class="token number">4096</span><span class="token punctuation">)</span><span class="token punctuation">,</span> nn<span class="token punctuation">.</span>ReLU<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    nn<span class="token punctuation">.</span>Dropout<span class="token punctuation">(</span>p<span class="token operator">=</span><span class="token number">0.5</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token comment"># 最后是输出层。由于这里使用Fashion-MNIST，所以用类别数为10，而非论文中的1000</span>
+    nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span><span class="token number">4096</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h1 id="paper">2.Paper</h1>
+<p><a target="_blank" rel="noopener" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3756587">JIANG,
+J., KELLY, B. and XIU, D. (2023), (Re-)Imag(in)ing Price Trends. J
+Finance, 78: 3193-3249.</a></p>
+<h3 id="abstract">Abstract</h3>
+<p>我们重新考虑了基于趋势的可预测性的想法，使用的方法是灵活学习最能预测未来回报的价格模式，而不是测试假设的或预先指定的模式（例如，动量和反转）。我们的原始预测数据是图像——股票级别的价格图表——我们使用机器学习图像分析方法从中诱导出最佳预测回报的价格模式。我们识别出的预测模式与文献中常分析的趋势信号大不相同，它们提供了更准确的回报预测，转化为更有利可图的投资策略，并且对一系列规范变化具有鲁棒性。这些模式还表现出与环境无关的特性：在短时间尺度（例如，日常数据）估计的预测模式，当应用于更长的时间尺度（例如，月度）时，同样能给出强有力的预测，从美国股市学到的模式在国际市场上同样能够很好地预测。</p>
+<h2 id="原论文的input-data">2.1 原论文的input data</h2>
+<p><strong>数据集：</strong>
+CRSP数据库中纽约证券交易所（NYSE）、美国证券交易所（AMEX）和纳斯达克（NASDAQ）上市的所有公司的每日股票数据。包括每日开盘价、最高价、最低价和调整后的收盘价。</p>
+<p><strong>数据集区间：</strong> 从1993年至2019年。</p>
+<p><strong>时间长度：</strong> 数据覆盖了27年的股市交易数据。</p>
+<p><strong>数据使用细节：</strong></p>
+<ul>
+<li><strong>价格调整：</strong>
+第一天的收盘价标准化为1，后续每天的收盘价根据日收益率计算。</li>
+<li><strong>标签定义：</strong>
+使用过去5天、20天或60天的市场数据图像，标签基于图像后的5天、20天或60天内的收益率是正还是非正。</li>
+</ul>
+<p><strong>训练和测试细节：</strong></p>
+<ul>
+<li><strong>数据划分：</strong>
+1993年至2000年的数据用于训练和验证（70%训练，30%验证），2001年至2019年的数据用作固定测试集。</li>
+<li><strong>模型训练：</strong>
+采用CNN模型，每种模型配置独立训练五次并平均预测结果。</li>
+</ul>
+<blockquote>
+<p>We use daily stock data from CRSP for all firms listed on NYSE, AMEX,
+and NASDAQ. Our sample runs from 1993–2019 based on the fact that daily
+opening, high, and low prices first become available in June 1992. Our
+price trend analysis focuses on returns adjusted for corporate actions
+by using returnsto construct a price series. In each image, we normalize
+the first day closing price to one, and construct each subsequent daily
+close from returns (RETt) according to</p>
+<figure>
+<img src="/post/9f0434dc/image-20240423141555228.png" alt="image-20240423141555228">
+<figcaption aria-hidden="true">image-20240423141555228</figcaption>
+</figure>
+<p>Each day’s opening/high/low price levels are scaled in proportion to
+that day’s closing price level.</p>
+<p>We consider three input choices that include images of market data
+over the past 5, 20, or 60 days. Image labels take a value of one or
+zero for positive or non-positive returns over the 5, 20, or 60 days
+subsequent to the image. Thus, our main analysis amounts to nine
+separately estimated models. Because the CNN optimization is stochastic,
+for each model configuration we independently re-train the CNN five
+times and average their forecasts (following Gu et al., 2020).</p>
+<p>Two important considerations when reading our empirical results are
+that we do not recursively re-train the model and that we randomly
+select training and validation samples. Specifically, we train and
+validate each model only once using data from 1993 to 2000, in which 70%
+of the sample are randomly selected for training and the remaining 30%
+for validation. The trained CNN model is then held fixed for the entire
+2001 to 2019 test sample. This design is primarily due to capacity in
+computational resources. Adopting a rolling window and repeatedly
+retraining is likely to further improve the predictions.</p>
+<p>Every period in which we construct new forecasts (weekly, monthly, or
+quarterly, depending on the model’s forecast horizon), we sort stocks
+into decile portfolios based on out-of-sample CNN estimates for
+probability of a positive subsequent return. We also construct a
+long-short spread portfolio (“H-L”) that is long decile 10 and short
+decile 1. The holding period for each portfolio coincides with the
+forecast horizon for each model (either 5, 20, or 60 days following the
+last date in an image). Throughout we use the notation “Ix/Ry” to denote
+that the model uses x-day images to predict subsequent y-day holding
+period returns.</p>
+</blockquote>
+<h2 id="train-方法">2.2 train 方法</h2>
+<p>我们从训练到模型调整，最后到预测的工作流程遵循 Gu et al.
+(2020)概述的基本程序。首先，我们将整个样本分为训练样本、验证样本和测试样本。在我们的主要美国数据样本中，我们在样本开始时使用单个八年样本（1993-2000）来估计和验证模型。在这个八年样本中，我们随机选择
+70% 的图像进行训练，30%
+的图像进行验证。随机选择训练和验证样本有助于平衡分类问题中的正标签和负标签，从而减轻由于长期看涨或看跌市场波动而导致的分类潜在偏差。在我们考虑的所有场景中，生成的训练和验证图像的标签大约有
+50% 向上和 50%
+向下。剩余十九年（2001-2019）的数据构成样本外测试数据集。</p>
+<h3 id="loss-function">Loss Function</h3>
+<figure>
+<img src="/post/9f0434dc/image-20240423142055300.png" alt="image-20240423142055300">
+<figcaption aria-hidden="true">image-20240423142055300</figcaption>
+</figure>
+<h3 id="hyperparameters">Hyperparameters</h3>
+<ol type="1">
+<li><strong>初始权重分布</strong>：使用Xavier初始化器（Glorot and
+Bengio,
+2010）设置每层的权重初始值，以确保预测的方差与标签的方差开始时处于相似的规模。</li>
+<li><strong>学习率</strong>：在使用随机梯度下降和Adam算法（Kinga and
+Adam, 2015）进行损失函数优化时，初始学习率设为1 × 10^-5。</li>
+<li><strong>批量大小</strong>：批量大小设为128。</li>
+<li><strong>批量正规化</strong>：在每个构建块中的卷积层和非线性激活层之间使用批量正规化层（Ioffe
+and Szegedy, 2015），以减少协变量偏移。</li>
+<li><strong>Dropout率</strong>：在全连接层应用50%的dropout（Srivastava
+et al., 2014），以减少过拟合。</li>
+<li><strong>早停机制</strong>：使用早停（early
+stopping）策略，在验证样本的损失函数连续两个训练周期不再改善时停止训练。</li>
+</ol>
+<blockquote>
+<p>We adopt the same regularization procedures in Gu et al. (2020) to
+combat overfit and aid efficient computation. We apply the Xavier
+initializer for weights in each layer (Glorot and Bengio, 2010). This
+promotes faster convergence by generating starting values for weights to
+ensure that prediction variance begins on a comparable scale to that of
+the labels. Loss function optimization uses stochastic gradient descent
+and the Adam algorithm (Kinga and Adam, 2015) with initial learning rate
+of 1 × 10−5 and batch size of 128. We use a batch normalization (Ioffe
+and Szegedy, 2015) layer between the convolution and non-linear
+activation within each building block to reduce covariate shift.7 We
+apply 50% dropout (Srivastava et al., 2014) to the fully connected layer
+(the relatively low parameterization in convolutional blocks avoids the
+need for dropout there). Finally, we use early stopping to halt training
+once the validation sample loss function fails to improve for two
+consecutive epochs. Gu et al. (2020) outline the intuition behind these
+choices, so for the sake of brevity, we omit this discussion and instead
+refer interested readers there.</p>
+</blockquote>
+<h1 id="广发-安宁宁">3.广发 安宁宁</h1>
+<h3 id="input-data">1.input data</h3>
+<p>要自己生成，可以自己加入技术指标、OHLC价格、Volume等。但是可能会数据量很大。</p>
+<h3 id="模式的structure可以按照alexnet-or-安宁宁的">2.模式的structure可以按照alexnet
+or 安宁宁的</h3>
+<table>
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">AlexNet</th>
+<th style="text-align: center;">安宁宁</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><img src="/post/9f0434dc/image-20240423161730775.png" alt="image-20240423161730775"></td>
+<td style="text-align: center;"><img src="/post/9f0434dc/image-20240423161801443.png" alt="image-20240423161801443"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="output">3.output</h3>
+<p>模型的最终输出为3个概率，
+分别对应个股在未来截面日上收益率的百分位，即后1/3、中1/3、前1/3，以表示跌、
+平、涨。最终以股票上涨的概率作为因子进行选股。</p>
+<p><strong>也许可以对收益率分箱，进行更多分类，转化为预测涨跌幅度而非概率。</strong></p>
+<h2 id="原文">原文：</h2>
+<blockquote>
+<figure>
+<img src="/post/9f0434dc/image-20240423160948219.png" alt="image-20240423160948219">
+<figcaption aria-hidden="true">image-20240423160948219</figcaption>
+</figure>
+<figure>
+<img src="/post/9f0434dc/image-20240423161005878.png" alt="image-20240423161005878">
+<figcaption aria-hidden="true">image-20240423161005878</figcaption>
+</figure>
+<figure>
+<img src="/post/9f0434dc/image-20240423161040743.png" alt="image-20240423161040743">
+<figcaption aria-hidden="true">image-20240423161040743</figcaption>
+</figure>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://nobodyyj.github.io">Huang Yujie</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://nobodyyj.github.io/post/9f0434dc.html">https://nobodyyj.github.io/post/9f0434dc.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://nobodyyj.github.io" target="_blank">Huang Yujie's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><a class="post-meta__tags" href="/tags/CNN/">CNN</a></div><div class="post_share"><div class="social-share" data-image="/img/header2.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/post/ca4a7826.html" title="央财课程学习疑问"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">央财课程学习疑问</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/post/1738571f.html" title="2023.12.21随笔"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-12-21</div><div class="title">2023.12.21随笔</div></div></a></div><div><a href="/post/e5e13074.html" title="统计学习 学习记录"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-02-21</div><div class="title">统计学习 学习记录</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/header2.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Huang Yujie</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Nobodyyj"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Nobodyyj" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:struggle_hyj@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#alexnet%E8%AF%86%E5%88%ABk%E7%BA%BF"><span class="toc-text">1.AlexNet识别K线</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-text">模型的结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#code"><span class="toc-text">Code</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#paper"><span class="toc-text">2.Paper</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#abstract"><span class="toc-text">Abstract</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E8%AE%BA%E6%96%87%E7%9A%84input-data"><span class="toc-text">2.1 原论文的input data</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#train-%E6%96%B9%E6%B3%95"><span class="toc-text">2.2 train 方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#loss-function"><span class="toc-text">Loss Function</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hyperparameters"><span class="toc-text">Hyperparameters</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B9%BF%E5%8F%91-%E5%AE%89%E5%AE%81%E5%AE%81"><span class="toc-text">3.广发 安宁宁</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#input-data"><span class="toc-text">1.input data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F%E7%9A%84structure%E5%8F%AF%E4%BB%A5%E6%8C%89%E7%85%A7alexnet-or-%E5%AE%89%E5%AE%81%E5%AE%81%E7%9A%84"><span class="toc-text">2.模式的structure可以按照alexnet
+or 安宁宁的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#output"><span class="toc-text">3.output</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E6%96%87"><span class="toc-text">原文：</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/9f0434dc.html" title="CNN识别K线图">CNN识别K线图</a><time datetime="2024-04-23T08:22:58.000Z" title="发表于 2024-04-23 16:22:58">2024-04-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/ca4a7826.html" title="央财课程学习疑问">央财课程学习疑问</a><time datetime="2024-03-26T11:18:12.000Z" title="发表于 2024-03-26 19:18:12">2024-03-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/e5e13074.html" title="统计学习 学习记录">统计学习 学习记录</a><time datetime="2024-02-21T11:30:58.000Z" title="发表于 2024-02-21 19:30:58">2024-02-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/3331babe.html" title="大四下学期to-do list">大四下学期to-do list</a><time datetime="2024-02-18T02:38:39.000Z" title="发表于 2024-02-18 10:38:39">2024-02-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/d38d0dd6.html" title="从零开始在vscode上配置C++运行环境">从零开始在vscode上配置C++运行环境</a><time datetime="2024-02-06T11:55:40.000Z" title="发表于 2024-02-06 19:55:40">2024-02-06</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/tmp_bg.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By Huang Yujie</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
