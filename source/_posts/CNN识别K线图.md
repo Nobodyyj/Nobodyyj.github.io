@@ -75,8 +75,9 @@ net = nn.Sequential(
 
 > We use daily stock data from CRSP for all firms listed on NYSE, AMEX, and NASDAQ. Our sample runs from 1993–2019 based on the fact that daily opening, high, and low prices first become available in June 1992. Our price trend analysis focuses on returns adjusted for corporate actions by using returnsto construct a price series. In each image, we normalize the first day closing price to one, and construct each subsequent daily close from returns (RETt) according to
 >
-> ![](./CNN识别K线图/image-20240423141555228.png)
->
+> $$
+> p_{t+1}=\left(1+R E T_{t+1}\right) p_t
+> $$
 > Each day’s opening/high/low price levels are scaled in proportion to that day’s closing price level. 
 >
 > We consider three input choices that include images of market data over the past 5, 20, or 60 days. Image labels take a value of one or zero for positive or non-positive returns over the 5, 20, or 60 days subsequent to the image. Thus, our main analysis amounts to nine separately estimated models. Because the CNN optimization is stochastic, for each model configuration we independently re-train the CNN five times and average their forecasts (following Gu et al., 2020). 
@@ -93,7 +94,9 @@ net = nn.Sequential(
 
 ### Loss Function
 
-![](./CNN识别K线图.assets/image-20240423142055300.png)
+$$
+L(y, \hat{y})=-y \log (\hat{y})-(1-y) \log (1-\hat{y})
+$$
 
 ### Hyperparameters
 
@@ -126,8 +129,8 @@ net = nn.Sequential(
 
 ## 原文：
 
-> ![](./CNN识别K线图.assets/image-20240423160948219.png)
+> ![](./CNN识别K线图/image-20240423160948219.png)
 >
-> ![](./CNN识别K线图.assets/image-20240423161005878.png)
+> ![](./CNN识别K线图/image-20240423161005878.png)
 >
 > ![](./CNN识别K线图/image-20240423161040743.png)
