@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>2024-11 随笔</title>
+      <link href="/post/bf520371.html"/>
+      <url>/post/bf520371.html</url>
+      
+        <content type="html"><![CDATA[<p>​今天是2024-11-17，距离我第一次在xytz进行量化实习已经一年多了，距离我进入lhzc实习也有7个多月了，临近final请了一个月长假，也算是终于有时间写一写目前我的一些想法与感受。既是为了对这一年多的实习经历做一个阶段性总结，也是为了与未来的我对话给我一些新的思考。</p><p>​股票方面，我掌握了从wind推送的原始数据构建三维财务报表的方法，重构了公司的基本面数据库，但是在真正使用的时候仍然卡在“如何将基本面与量价因子结合”上，之前茂源的pm说“为了用好的价格买到好的公司”，我觉得是一句非常精妙的总结。写因子的时候我还是会要东抄抄西抄抄，看paper看研报，我潜意识觉得可能还是需要展开自己的研究，至少需要培养自己展开研究的能力并养成这种习惯，但是目前明显双线程的我没有这种闲情雅致（以后会有的吧）。。我做的K线图识别模型马上就要实盘了，看起来到24年9月底的效果都还不错，希望OS能好到让我留用，不然就得继续重复枯燥无味的训练了</p><p>​数字货币方面，今年九月之前一直在忙着和quantgroup的朋友们完善统计套利策略，但是其实从下单算法、止损止盈上都还有很大的优化空间，上学以后没有继续推进真的非常可惜。不过总算是有了实盘的策略，过了一把PM的瘾。随着特朗普上台，我觉得数字货币会具有越来越大的流动性，未来应该要花时间在上面完善时序策略与截面策略，早日做到A7甚至A8的水平。</p><p>​这一年来的实习让我对这个行业彻底祛魅了，但是在看清行业本质以后，我更加确信了这是我愿意花时间花精力投入的行业，希望我能继续保持对研究市场的热爱，保持对探寻市场规律的着迷。同时也能保持自己“为了人类文明之进步”而学习工作的初心。我觉得这个愿望已经成为了激励我客服一切困难，甚至是客服死亡恐惧的动力。</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 实习, 随笔, quant </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>CNN识别K线图</title>
       <link href="/post/9f0434dc.html"/>
       <url>/post/9f0434dc.html</url>
@@ -177,19 +196,6 @@
             <tag> 实习 </tag>
             
         </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>MySQL学习记录</title>
-      <link href="/post/77d962bf.html"/>
-      <url>/post/77d962bf.html</url>
-      
-        <content type="html"><![CDATA[<p><strong>本文用来记录DBMS小白学习MySQL的过程</strong>。</p><p>学习资源链接：https://www.bilibili.com/video/BV1iq4y1u7vj?p=12&amp;vd_source=44ba9a7b92cb9c058705d88870afca92</p><h2 id="学习主线">学习主线：</h2><figure><img src="/post/77d962bf/image-20230928115341489.png" alt="image-20230928115341489"><figcaption aria-hidden="true">image-20230928115341489</figcaption></figure><h1 id="第03章_基本的select语句select非常重要">第03章_基本的SELECT语句（SELECT非常重要）</h1><h2 id="sql的分类">SQL的分类</h2><p>DDL:数据定义语言。CREATE  TRUNCATE DML:数据操作语言。INSERTDCL:数据控制语言。COMMIT </p><p>查询和更新指令构成了 SQL 的 DML部分（<strong>增删改查</strong>）：</p><ul><li><code>INSERT INTO</code> - 向数据库表中插入数据</li><li><code>DELETE</code> - 从数据库表中删除数据</li><li><code>UPDATE</code> - 更新数据库表中的数据</li><li><code>SELECT</code> - 从数据库表中获取数据</li></ul><p>SQL 的数据定义语言 (DDL)部分使我们有能力创建或删除表格。我们也可以定义索引（键），规定表之间的链接，以及施加表间的约束。</p><p>SQL 中最重要的 DDL 语句:</p><ul><li><code>CREATE DATABASE</code> - 创建新数据库</li><li><code>ALTER DATABASE</code> - 修改数据库</li><li><code>CREATE TABLE</code> - 创建新表</li><li><code>ALTER TABLE</code> - 变更（改变）数据库表</li><li><code>DROP TABLE</code> - 删除表</li><li><code>CREATE INDEX</code> - 创建索引（搜索键）</li><li><code>DROP INDEX</code> - 删除索引</li></ul><h2 id="sql的数据导入方法">SQL的数据导入方法</h2><h3 id="如果是使用cmd命令行">如果是使用cmd命令行</h3><pre class="line-numbers language-cmd" data-language="cmd"><code class="language-cmd">mysql -u root -p # 进入mysql数据库source # + 文件的全部路径名，比如&quot;source d:\atguigudb.sql;&quot; use aiguigudb #运行sql文件，show tables;即可看到各表<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><h3 id="使用navicat时">使用Navicat时</h3><figure><img src="/post/77d962bf/image-20230930152422470.png" alt="image-20230930152422470"><figcaption aria-hidden="true">image-20230930152422470</figcaption></figure><p>右键图中atguiggudb，运行SQL文件</p><figure><img src="/post/77d962bf/image-20230930152602013.png" alt="image-20230930152602013"><figcaption aria-hidden="true">image-20230930152602013</figcaption></figure><p>然后刷新，表就会更新。</p>]]></content>
-      
-      
       
     </entry>
     
