@@ -4,6 +4,27 @@
   
     
     <entry>
+      <title>数字货币截面回测框架</title>
+      <link href="/post/1a7af3c0.html"/>
+      <url>/post/1a7af3c0.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="motivation">Motivation</h1><p>最近在数字货币市场主观投资收益反反复复，实在是有些顶不住了，加之复习周无聊，心血来潮想开个项目记录一下自己重构数字货币的截面回测框架的过程。</p><p>暂时的思维导图是</p><ol type="1"><li>构建格式化标准数据。具体标准参考<code>asim_io</code></li><li>使用格式化数据进行向量化回测</li></ol><p>改进方案: 使用rust or C++ 对alpha values 作事件驱动型回测。</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 量化 </tag>
+            
+            <tag> 数字货币 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>2024-11 随笔</title>
       <link href="/post/bf520371.html"/>
       <url>/post/bf520371.html</url>
@@ -14,7 +35,9 @@
       
         <tags>
             
-            <tag> 实习, 随笔, quant </tag>
+            <tag> 量化 </tag>
+            
+            <tag> 随笔 </tag>
             
         </tags>
       
