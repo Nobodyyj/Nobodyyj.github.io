@@ -6,7 +6,7 @@
   <link href="https://nobodyyj.github.io/atom.xml" rel="self"/>
   
   <link href="https://nobodyyj.github.io/"/>
-  <updated>2025-07-30T15:04:56.989Z</updated>
+  <updated>2025-09-10T09:52:05.448Z</updated>
   <id>https://nobodyyj.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="https://nobodyyj.github.io/post/0.html"/>
+    <id>https://nobodyyj.github.io/post/0.html</id>
+    <published>2025-09-10T09:10:03.969Z</published>
+    <updated>2025-09-10T09:52:05.448Z</updated>
+    
+    <content type="html"><![CDATA[<p>---</p><p>title: 动量/趋势策略的思考</p><p>date: 2025-09-10 17:10:03</p><p>tags: 实习</p><p>categories:</p><p>- 投研思考</p><p>---</p><p>最近花了相当长的一段时间在做日内T0的策略，目前还没有实盘的结果，但是在写因子时已经观察到，日内的收益贡献仍然主要以反转(reversal)like <code>-return 20days</code>为主。笔者不禁提出一个问题：<strong>似乎不管是隔夜还是日内，动量/趋势性策略都是很难找到的？</strong></p><p>在做实验前，笔者先阐述一下我对于动量的理解：</p><p><strong>动量效应的本质是市场中买方卖方力量不均衡的延续。</strong>以上涨动量为例，从市场的微观结构解释为买方愿意<u>持续</u>以一个更不利的价格吃下订单簿中的卖单，这会导致以提供流动性为目的在双向挂单的做市商持续亏损，要想这种行情持续，就必须有其他交易者不断承接止盈出场的卖单，并以更高的价格吃单。那这种行为的动机要么是市场参与者普遍预期未来的价格将不再会回落到当前价位，要么是短期价格具有非常大的上涨空间，吸引来了大量的投机者。</p><p>在期货市场，这种情况可能是基本面出发导致的商品产能不足/产能过剩，也可能是针对空头或多头的逼空/逼多行情；在数字货币合约市场，这种情况可能是宏观事件驱动（美联储计划降息市场预期流动性增加带来的大涨），或是市场变化达到一定幅度后，多单、空单进入爆仓强平价格范围带来的强平连锁反应；在股票市场，情况更为复杂，从大盘上看，有可能是宏观政策利好带来的估值上升，市场重新定价，也可能是宏观政策下的市场炒作；从个股上看，有可能是事件驱动下的潜在营收上涨，也有可能是政策逻辑下的某条主线（国产替代），更有可能是机构资金的抱团炒作（银行红利、吃药喝酒行情）。此外，还有无数潜在的驱动单边行情的逻辑，为贴合实际业务需求，笔者后续只讨论上涨行情逻辑。</p><p>总之，单边的趋势行情一定有强逻辑的支持，必须是“还能再涨”的期望下，才会驱使资金在一个相对前高更高的价格不断接住卖单。</p><p><strong>在量化的视角，我们的做法无非是预测市场或跟随市场</strong>。如果要预测市场，就必须找到能解释上涨的逻辑，并计算出该逻辑下市场的期望价格，这种并不现实，且不说是否能通过量化手段找到上涨逻辑，即便找到后，每个参与者也都有自己的合理定价，难以产生均衡合理的最终价格。</p><p>因此，只能走跟随市场这条路。那么自然会引出如下问题：</p><ol type="1"><li>怎么定义什么行情是一段趋势？</li><li>什么时候可以入场开始跟随？</li><li>什么时候应该平仓停止跟随？</li></ol><p>这似乎指向了规则型策略的方向——不做任何预测，只计算开仓的规则和平仓的规则。那自然要考虑规则型策略非常重要的另一个方面，仓位控制。小仓位入场，浮盈加仓，及时止损止盈……这种操作口诀已经是人人皆知。所以笔者先基于这个共识，尝试以资金流为切入点研究A股的动量策略。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;---&lt;/p&gt;
+&lt;p&gt;title: 动量/趋势策略的思考&lt;/p&gt;
+&lt;p&gt;date: 2025-09-10 17:10:03&lt;/p&gt;
+&lt;p&gt;tags: 实习&lt;/p&gt;
+&lt;p&gt;categories:&lt;/p&gt;
+&lt;p&gt;- 投研思考&lt;/p&gt;
+&lt;p&gt;---&lt;/p&gt;
+&lt;p&gt;最</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>2025年中总结</title>
@@ -65,35 +92,6 @@
     
     
     <category term="年度总结" scheme="https://nobodyyj.github.io/tags/%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>数字货币截面回测框架</title>
-    <link href="https://nobodyyj.github.io/post/1a7af3c0.html"/>
-    <id>https://nobodyyj.github.io/post/1a7af3c0.html</id>
-    <published>2024-12-03T07:43:40.000Z</published>
-    <updated>2025-01-05T09:41:37.596Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="motivation">Motivation</h1><p>最近在数字货币市场主观投资收益反反复复，实在是有些顶不住了，加之复习周无聊，心血来潮想开个项目记录一下自己重构数字货币的截面回测框架的过程。</p><p>暂时的思维导图是</p><ol type="1"><li>构建格式化标准数据。具体标准参考<code>asim_io</code></li><li>使用格式化数据进行向量化回测</li></ol><p>改进方案:</p><p>使用rust or C++ 对alpha values 作事件驱动型回测。</p><h1 id="项目进度">项目进度:</h1><h2 id="section">2024-12-3</h2><p>重构build数据的代码。</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;motivation&quot;&gt;Motivation&lt;/h1&gt;
-&lt;p&gt;最近在数字货币市场主观投资收益反反复复，实在是有些顶不住了，加之复习周无聊，心血来潮想开个项目记录一下自己重构数字货币的截面回测框架的过程。&lt;/p&gt;
-&lt;p&gt;暂时的思维导图是&lt;/p&gt;
-&lt;ol typ</summary>
-      
-    
-    
-    
-    <category term="自营" scheme="https://nobodyyj.github.io/categories/%E8%87%AA%E8%90%A5/"/>
-    
-    
-    <category term="量化" scheme="https://nobodyyj.github.io/tags/%E9%87%8F%E5%8C%96/"/>
-    
-    <category term="数字货币" scheme="https://nobodyyj.github.io/tags/%E6%95%B0%E5%AD%97%E8%B4%A7%E5%B8%81/"/>
     
   </entry>
   
@@ -151,11 +149,11 @@
   </entry>
   
   <entry>
-    <title>统计学习 学习记录</title>
+    <title>《统计学习》学习记录</title>
     <link href="https://nobodyyj.github.io/post/e5e13074.html"/>
     <id>https://nobodyyj.github.io/post/e5e13074.html</id>
     <published>2024-02-21T11:30:58.000Z</published>
-    <updated>2024-12-29T14:09:20.985Z</updated>
+    <updated>2025-08-05T14:22:25.360Z</updated>
     
     <content type="html"><![CDATA[<p>作为非科班出身的金数人，在学习机器学习模型时我发现自对一些最基础、最本质的概念理解不够深入，所以打算写一篇blog，记录一下自己在学习的时候遇到的零零散散的问题。</p><h2 id="极大似然估计mle和损失函数的关系">1.极大似然估计(MLE)和损失函数的关系</h2><ol type="1"><li>若变量服从高斯分布，MLE的结果是OLS</li><li>若变量服从伯努利分布，MLE的结果是logistic回归</li><li>若变量服从多项式分布，MLE的结果是softmax</li></ol><h2 id="当我们对损失函数正则化时我们在做什么">2.当我们对损失函数正则化时，我们在做什么？</h2><p>做正则化的目的就是为了提高训练出模型的泛化能力。影s响模型泛化能力的是权重<span class="math inline">\(w\)</span> 和偏置 <span class="math inline">\(b\)</span> 。</p><p>参考：<a href="https://www.bilibili.com/video/BV1Z44y147xA/?spm_id_from=333.337.search-card.all.click&amp;vd_source=44ba9a7b92cb9c058705d88870afca92">“L1和L2正则化”直观理解</a></p><h3 id="拉格朗日对偶角度">2.1 拉格朗日对偶角度</h3><p>所谓正则化，就是在损失函数中加上Lp范数。</p><p><img src="/post/e5e13074/image-20240221221538595.png"></p><blockquote><p>为什么说L1正则化（右）可以带来稀疏性，就是因为L1正则化后的极值点容易出现在坐标轴上，而出现在坐标轴上意味着其他某些维度的值为0，比如要用胡子和毛色区分猫咪和狗，L2正则化（左）可能只是赋予两个特征不同的权重，<span class="math inline">\(\lambda\)</span>​的作用是来调节权重大小，而L1正则化就可能只考虑胡子，而不考虑毛色，这就带来了<strong>稀疏性</strong>。·+<span class="math inline">\(x\)</span>是训练集里面的数据，视作常数不考虑；真正决定拟合效果的是权重<span class="math inline">\(W\)</span>，所以偏置<span class="math inline">\(b\)</span>虽然是未知参数也不进行研究； <span class="math display">\[\|W\|_1-C \leq \mathbf{0}\]</span> 这里可以理解为只考虑对<span class="math inline">\(W\)</span>的可行域范围进行约束 。</p></blockquote><blockquote><figure><img src="/post/e5e13074/image-20240224212331595.png" alt="Lp范数的可视化"><figcaption aria-hidden="true">Lp范数的可视化</figcaption></figure><p>只有p&gt;=1的时候，Lp范数才是一个凸集，这时候以Lp范数作为约束的问题才能是一个凸优化问题；反之，若0&lt;p&lt;1，集合就是非凸集。</p></blockquote><p><strong>我们看到的L2正则化的函数和原问题的拉格朗日函数之间的关系</strong></p><p><img src="/post/e5e13074/image-20240224213614031.png"></p><p>在这个问题中，红的的函数与绿色相比，少了一个<span class="math inline">\(\lambda\)</span><span class="math inline">\(C\)</span>，这个C其实调节的是圆半径的大小，在绿色函数中，就是C视为已知，来求<span class="math inline">\(\lambda\)</span>；而在红色函数中，是用<span class="math inline">\(\lambda\)</span>来调节圆的半径，每一个极值点都对应一对共线相反大小相等的梯度，对应一个特别的<span class="math inline">\(\lambda\)</span>，也就是对应一个半径C（即可以通过调节<span class="math inline">\(\lambda\)</span>来调节<span class="math inline">\(C\)</span>。</p><p>红色和绿色两个函数对<span class="math inline">\(W\)</span>求梯度后，得到的W值是相等的，因为<span class="math inline">\(\lambda\)</span><span class="math inline">\(C\)</span>在对<span class="math inline">\(W\)</span>求导的时候为0。看似这两个问题是等价的，但是其实超参数已经改变了，上面的超参数是<span class="math inline">\(C\)</span>，下面的是<span class="math inline">\(\lambda\)</span>。</p><p><strong>L1正则化和L2正则化的特性</strong>：</p><p>L1正则化会带来稀疏性。（待补充）</p><p><img src="/post/e5e13074/image-20240221223742439.png"></p><blockquote><p>为什么说L1正则化（右）可以带来稀疏性，就是因为L1正则化后的极值点容易出现在坐标轴上，而出现在坐标轴上意味着其他某些维度的值为0，比如要用胡子和毛色区分猫咪和狗，L2正则化（左）可能只是赋予两个特征不同的权重，<span class="math inline">\(\lambda\)</span>的作用是来调节权重大小，而L1正则化就可能只考虑胡子，而不考虑毛色，这就带来了<strong>稀疏性</strong>。</p></blockquote><h2 id="树模型">3.树模型</h2><h3 id="基础的树">3.1 基础的树</h3><p>李航统计学习上比较基础的树模型：ID3 C4.5 CART</p><p>三者区别：</p><ul><li><strong>划分标准的差异：</strong>ID3使用信息增益偏向特征值多的特征，C4.5使用信息增益率克服信息增益的缺点，偏向于特征值小的特征，CART使用基尼指数克服 C4.5 需要求 log的巨大计算量，偏向于特征值较多的特征。</li><li><strong>使用场景的差异：</strong>ID3 和 C4.5都只能用于分类问题，CART 可以用于分类和回归问题；ID3 和 C4.5是多叉树，速度较慢，CART 是二叉树，计算速度很快；</li><li><strong>样本数据的差异：</strong>ID3只能处理离散数据且缺失值敏感，C4.5 和 CART可以处理连续性数据且有多种方式处理缺失值；从样本量考虑的话，小样本建议C4.5、大样本建议 CART。C4.5处理过程中需对数据集进行多次扫描排序，处理成本耗时较高，而 CART本身是一种大样本的统计方法，小样本处理下泛化误差较大 ；</li><li><strong>样本特征的差异：</strong>ID3 和 C4.5层级之间只使用一次特征，CART 可多次重复使用特征；</li><li><strong>剪枝策略的差异：</strong>ID3 没有剪枝策略，C4.5是通过悲观剪枝策略来修正树的准确性，而 CART 是通过代价复杂度剪枝。</li></ul><h3 id="基于集成学习的改进">3.2 基于集成学习的改进</h3><p><strong>基于Bagging算法典型代表</strong></p><p>随机森林（Random Forest）</p><p><strong>基于Boosting算法典型代表</strong></p><p>如AdaBoost、GBDT、XGBoost等。</p><blockquote><p>1）Bagging + 决策树 = 随机森林</p><p>2）AdaBoost + 决策树 = 提升树</p><p>3）Gradient Boosting + 决策树 = GBDT</p></blockquote><p><strong>那么Bagging和Boosting的区别是什么呢？</strong></p><p>1）样本选择：</p><p>Bagging：训练集是在原始集中有放回选取的，从原始集中选出的各轮训练集之间是独立的。</p><p>Boosting：每一轮的训练集不变，只是训练集中每个样例在分类器中的权重发生变化。而权值是根据上一轮的分类结果进行调整。</p><p><strong>基于这个性质我们可以知道，Bagging后的bias与单模型接近，而variance能显著下降，每个基模型之间是独立的。</strong></p><p>2）样例权重：</p><p>Bagging：使用均匀取样，每个样例的权重相等</p><p>Boosting：根据错误率不断调整样例的权值，错误率越大则权重越大。</p><p>3）预测函数：</p><p>Bagging：所有预测函数的权重相等。</p><p>Boosting：每个弱分类器都有相应的权重，对于分类误差小的分类器会有更大的权重。</p><p>4）并行计算：</p><p>Bagging：各个预测函数可以并行生成</p><p>Boosting：各个预测函数只能顺序生成，因为后一个模型参数需要前一轮模型的结果。</p><p>5）适用场景：</p><p>Bagging: High Variance &amp; Low Bias</p><p>Boosting: Low Variance &amp; High Bias</p>]]></content>
     
