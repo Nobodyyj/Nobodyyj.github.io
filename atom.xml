@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Huang Yujie&#39;s Blog</title>
+  <title>Nobody&#39;s Blog</title>
   <icon>https://www.gravatar.com/avatar/bb904430b38398d2d1ab671d0d4cc8de</icon>
   <subtitle>Welcome to my blog!</subtitle>
   <link href="https://nobodyyj.github.io/atom.xml" rel="self"/>
@@ -10,7 +10,7 @@
   <id>https://nobodyyj.github.io/</id>
   
   <author>
-    <name>Huang Yujie</name>
+    <name>Nobody</name>
     <email>struggle_hyj@outlook.com</email>
   </author>
   
